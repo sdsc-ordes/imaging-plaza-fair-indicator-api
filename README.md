@@ -1,1 +1,1 @@
-# imaging-plaza-fair-indicator
+# imaging-plaza-fair-indicator-api
