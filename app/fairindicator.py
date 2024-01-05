@@ -54,21 +54,20 @@ LIMIT 1
 
 ###TEMPORARY: Load data from file
 data_g = rdflib.Graph()
-data_g.parse(data=open("./data.ttl", "r").read(), format="turtle")
+data_g.parse(file=open("./data.ttl"), format="turtle")
 ###ENDOFTEMPORARY
 
 #Load SHACL shapes into rdflib
-shapes = rdflib.Graph()
-shapes.parse(data=open("./app/shapes.ttl", "r").read(), format="turtle")
+shapes_g = rdflib.Graph()
+shapes_g.parse(file=open("./app/shapes.ttl"), format="turtle")
 
 #Run SHACL validation with pyshacl
-shapes_g = rdflib.Graph()
 validation_result = pyshacl.validate(data_graph = data_g, 
-                                     shapes_graph = shapes, 
+                                     shacl_graph = shapes_g, 
                                      inference = 'rdfs', 
                                      serialize_report_graph = 'turtle')
 validation_result = validation_result[1]
-print(validation_result)
+# print(validation_result)
 shapes_g.parse(validation_result, format="turtle")
 shapes_g.serialize(format="turtle")
 

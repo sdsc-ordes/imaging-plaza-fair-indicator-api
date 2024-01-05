@@ -20,65 +20,66 @@
 		sh:namespace <https://epfl.ch/example/> ;
 	] .
 
-ex:fairlevel0Shape a sh:NodeShape    ;
-sh:targetClass <http://schema.org/SoftwareSourceCode>;
+ex:fairlevel0Shape a sh:NodeShape    
 .
 ex:fairlevel1Shape a sh:NodeShape ;
-sh:targetClass <http://schema.org/SoftwareSourceCode>;
-			sh:property schema:CreativeWork-license ,
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property
                   [sh:path schema:license ;
-                  sh:minCount 1] ,
-                  schema:CreativeWork-citation,
+                  sh:minCount 1;
+                  sh:message "Fair level 1"] ,
                   [sh:path schema:citation ;
-                  sh:minCount 1] ,
-                  schema:Thing-name ,
+                  sh:minCount 1;
+                  sh:message "Fair level 1"] ,
                   [sh:path schema:name ;
-                  sh:minCount 1];    
+                  sh:minCount 1;
+                  sh:message "Fair level 1"];    
 .
 
 ex:fairlevel2Shape a sh:NodeShape ;
-sh:targetClass <http://schema.org/SoftwareSourceCode>;
-			sh:property sd:SoftwareApplication-readme ,
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property 
                   [sh:path sd:readme ;
-                  sh:minCount 1] ;
+                  sh:minCount 1;
+                  sh:message "Fair level 2"] ;
       sh:and (ex:fairlevel1Shape)
 .
 
 ex:fairlevel3Shape a sh:NodeShape ;
-sh:targetClass <http://schema.org/SoftwareSourceCode>;
-			sh:property schema:SoftwareApplication-softwareRequirements ,
-                  [sh:path schema:SoftwareApplication-softwareRequirements ;
-                  sh:minCount 1 ] ;
-                  # sd:SoftwareApplication-hasInput ,
-                  # [sh:path sd:hasInput ;
-                  # sh:minCount 1],
-                  # sd:SoftwareApplication-hasOutput ,
-                  # [sh:path sd:hasOutput ;
-                  # sh:minCount 1] ;
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property
+                  [sh:path sd:hasInput ;
+                  sh:minCount 1 ;
+                  sh:message "Fair level 3"],
+                  [sh:path sd:hasOutput ;
+                  sh:minCount 1 ;
+                  sh:message "Fair level 3"] ;
       sh:and (ex:fairlevel2Shape) 
 .
 
 ex:fairlevel4Shape a sh:NodeShape ;
-sh:targetClass <http://schema.org/SoftwareSourceCode>;
-			sh:property schema:SoftwareApplication-memoryRequirements ,
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property 
                   [sh:path schema:memoryRequirements ;
-                  sh:minCount 1] ,
-                  sd:SoftwareApplication-hasDocumentation ,
+                  sh:minCount 1;
+                  sh:message "Fair level 4"] ,
                   [sh:path sd:hasDocumentation ;
-                  sh:minCount 1] ,
-                  sd:SoftwareApplication-hasParameter ,
+                  sh:minCount 1;
+                  sh:message "Fair level 4"] ,
                   [sh:path sd:hasParameter ;
-                  sh:minCount 1] ;
+                  sh:minCount 1;
+                  sh:message "Fair level 4"] ;
       sh:and (ex:fairlevel3Shape)
 .
 
 ex:fairlevel5Shape a sh:NodeShape ;
-sh:targetClass <http://schema.org/SoftwareSourceCode>;
-			sh:property sd:SoftwareApplication-hasExecutableInstructions ,
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property 
                   [sh:path sd:hasExecutableInstructions ;
-                  sh:minCount 1] ,
-                  sd:SoftwareApplication-hasExecutableNotebook ,
+                  sh:minCount 1;
+                  sh:message "Fair level 5"] ,
                   [sh:path sd:hasExecutableNotebook ;
-                  sh:minCount 1];
+                  sh:minCount 1;
+                  sh:message "Fair level 5"];
       sh:and (ex:fairlevel4Shape) 
 .
