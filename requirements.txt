@@ -2,3 +2,8 @@ uvicorn
 fastapi
 rdflib
 streamlit
+pyshacl
+requests
+os
+dotenv
+SPARQLWrapper

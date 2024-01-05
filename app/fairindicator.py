@@ -6,13 +6,10 @@ from SPARQLWrapper import SPARQLWrapper, JSON, QueryResult, TURTLE, CSV
 import pyshacl
 
 load_dotenv()
-
+#set SPARQL endpoint authentication
 db_host = os.environ.get("GRAPHDB_URL")
 db_user = os.environ.get("GRAPHDB_USER")
 db_password = os.environ.get("GRAPHDB_PASSWORD")
-
-
-
 
 graph = 'https://epfl.ch/example/finalGraph'
 softwareURI = 'https://github.com/SDSC-ORD/gimie'
@@ -29,8 +26,7 @@ PREFIX ex: <https://epfl.ch/example/>
         OPTIONAL { ?object ?p ?o . }
                 }}}
 """
-
-query = """
+get_suggestion_query = """
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 PREFIX : <https://epfl.ch/example/>
 SELECT (GROUP_CONCAT(DISTINCT ?path; SEPARATOR=', ') AS ?youAreMissing) ?ToAchieve
@@ -44,37 +40,40 @@ GROUP BY ?ToAchieve
 ORDER BY ?ToAchieve
 LIMIT 1
 """
+#Get data from GraphDB
+# sparql = SPARQLWrapper(db_host)
+# sparql.setQuery(get_relevant_software_query)
+# sparql.setReturnFormat(TURTLE)
+# sparql.setCredentials(user=db_user, passwd=db_password)
+# results = sparql.query().convert()
 
-sparql = SPARQLWrapper(db_host)
-sparql.setQuery(get_relevant_software_query)
-sparql.setReturnFormat(TURTLE)
-sparql.setCredentials(user=db_user, passwd=db_password)
-results = sparql.query().convert()
-# print(results)
-###WORKS UPTO HERE, Now convert to JSON-LD, put in a rdflib graph and then use the indicator function on that
+# #Load data into rdflib
+# data_g = rdflib.Graph()
+# data_g.parse(data=results, format="turtle")
+# data_g.serialize(destination='data.ttl', format='turtle')
 
-g = rdflib.Graph()
-g.parse(data=results, format="turtle")
-g.serialize(destination='data.ttl', format='turtle')
+###TEMPORARY: Load data from file
+data_g = rdflib.Graph()
+data_g.parse(data=open("./data.ttl", "r").read(), format="turtle")
+###ENDOFTEMPORARY
 
-shapes = open("./app/shapes.ttl", "r").read()
-# print(shapes)
+#Load SHACL shapes into rdflib
+shapes = rdflib.Graph()
+shapes.parse(data=open("./app/shapes.ttl", "r").read(), format="turtle")
 
-# print(g.serialize(format="turtle"))
-
-#TODO: Run SHACL validation on result
-g2 = rdflib.Graph()
-validation_result = pyshacl.validate(data_graph = g, shapes_graph = shapes, inference = 'rdfs', serialize_report_graph = 'turtle')
+#Run SHACL validation with pyshacl
+shapes_g = rdflib.Graph()
+validation_result = pyshacl.validate(data_graph = data_g, 
+                                     shapes_graph = shapes, 
+                                     inference = 'rdfs', 
+                                     serialize_report_graph = 'turtle')
 validation_result = validation_result[1]
-g2.parse(validation_result, format="turtle")
-g2.serialize(format="turtle")
-report = open('report.ttl', 'w')
-print(g2.serialize(format="turtle"))
-print(report)
+print(validation_result)
+shapes_g.parse(validation_result, format="turtle")
+shapes_g.serialize(format="turtle")
 
-error_report = open('report.ttl', 'r').read()
-result2 = g2.query(query)
-
+#Run query on SHACL validation result to get suggestions
+result2 = shapes_g.query(get_suggestion_query)
 print(result2.serialize(format="csv"))
 
 #TODO: Run query on SHACL validation result to get suggestions
