@@ -5,46 +5,11 @@ from dotenv import load_dotenv
 from SPARQLWrapper import SPARQLWrapper, JSON, QueryResult, TURTLE, CSV
 import pyshacl
 
-load_dotenv()
-
-# Set SPARQL endpoint authentication
-db_host: str = os.environ.get("GRAPHDB_URL")
-db_user: str = os.environ.get("GRAPHDB_USER")
-db_password: str = os.environ.get("GRAPHDB_PASSWORD")
-
-graph: str = 'https://epfl.ch/example/finalGraph'
-softwareURI: str = 'https://github.com/SDSC-ORD/gimie'
-
-get_relevant_software_query: str = """
-PREFIX ex: <https://epfl.ch/example/>
-CONSTRUCT {{
-  ?subject ex:graph <{graph}>  .
-  ?subject ?predicate ?object .
-  ?object ?p ?o .
-}} WHERE {{
-    GRAPH <{graph}> {{
-    {{?subject ?predicate ?object .
-     filter(?subject = <{softwareURI}> )
-    OPTIONAL {{ ?object ?p ?o . }}
-            }}}}}}
-""".format(softwareURI=softwareURI, graph=graph)
-
-get_suggestion_query: str = """
-PREFIX sh: <http://www.w3.org/ns/shacl#>
-PREFIX : <https://epfl.ch/example/>
-SELECT (GROUP_CONCAT(DISTINCT ?path; SEPARATOR=', ') AS ?youAreMissing) ?ToAchieve
-WHERE {
-  {    ?s a sh:ValidationResult.
-    ?s sh:resultPath ?path.
-    ?s sh:resultMessage ?ToAchieve.
-  }
-}
-GROUP BY ?ToAchieve
-ORDER BY ?ToAchieve
-LIMIT 1
-"""
-
-def get_data_from_graphdb(db_host: str, db_user: str, db_password: str) -> bytes:
+def get_data_from_graphdb(db_host: str, 
+                          db_user: str, 
+                          db_password: str,
+                          softwareURI: str,
+                          graph:str) -> bytes:
     """
     Get data from GraphDB.
 
@@ -52,10 +17,27 @@ def get_data_from_graphdb(db_host: str, db_user: str, db_password: str) -> bytes
         db_host: The host URL of the GraphDB.
         db_user: The username for authentication.
         db_password: The password for authentication.
+        softwareURI: Indentifier of target software
+        graph: Graph where the entry is located
 
     Returns:
         The data as a bytes object.
     """
+
+    get_relevant_software_query: str = """
+    PREFIX ex: <https://epfl.ch/example/>
+    CONSTRUCT {{
+    ?subject ex:graph <{graph}>  .
+    ?subject ?predicate ?object .
+    ?object ?p ?o .
+    }} WHERE {{
+        GRAPH <{graph}> {{
+        {{?subject ?predicate ?object .
+        filter(?subject = <{softwareURI}> )
+        OPTIONAL {{ ?object ?p ?o . }}
+                }}}}}}
+    """.format(softwareURI=softwareURI, graph=graph)
+
     sparql = SPARQLWrapper(db_host)
     sparql.setQuery(get_relevant_software_query)
     sparql.setReturnFormat(TURTLE)
@@ -123,5 +105,45 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
     Returns:
         The suggestions as a serialized JSON string.
     """
+
+    get_suggestion_query: str = """
+    PREFIX sh: <http://www.w3.org/ns/shacl#>
+    PREFIX : <https://epfl.ch/example/>
+    SELECT (GROUP_CONCAT(DISTINCT ?path; SEPARATOR=', ') AS ?youAreMissing) ?ToAchieve
+    WHERE {
+    {    ?s a sh:ValidationResult.
+        ?s sh:resultPath ?path.
+        ?s sh:resultMessage ?ToAchieve.
+    }
+    }
+    GROUP BY ?ToAchieve
+    ORDER BY ?ToAchieve
+    LIMIT 1
+    """
+
     result2 = results_g.query(get_suggestion_query)
     return result2.serialize(format="json")
+
+
+def indicate_fair(softwareURI:str, graph:str) -> str:
+
+    load_dotenv()
+
+    # Set SPARQL endpoint authentication
+    db_host: str = os.environ.get("GRAPHDB_URL")
+    db_user: str = os.environ.get("GRAPHDB_USER")
+    db_password: str = os.environ.get("GRAPHDB_PASSWORD")
+
+    #graph: str = 'https://epfl.ch/example/finalGraph'
+    #softwareURI: str = 'https://github.com/SDSC-ORD/gimie'
+
+
+
+    results = get_data_from_graphdb(db_host, db_user, db_password, softwareURI, graph)
+    #data_g = load_data_into_rdflib(results)
+
+    #shapes_g = load_shapes_into_rdflib("shapes.ttl")
+    #results_g = run_shacl_validation(data_g, shapes_g)
+    #suggestions = get_suggestions(results_g)
+
+    #return suggestions

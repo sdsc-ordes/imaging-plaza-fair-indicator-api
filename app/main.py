@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, Form
 from fastapi.responses import JSONResponse
 import requests
 
-from fairindicator import *
+from .fairindicator import *
 
 app = FastAPI()
 
@@ -10,13 +10,19 @@ app = FastAPI()
 def index():
     return {"title": "Hello, welcome to the Imaging Plaza Fair Level Indicator"}
 
-@app.get("/indicate/{uri}")
-async def validate(uri:str):
-    # 1. Retrieve information from GraphDB
-    # 2. Provide it to the indicator function
-    # 3. Return it 
+@app.get("/indicate/")
+async def validate(uri:str, graph: str):
 
-    pass
+    if graph == "temporary":
+        graphURL = "https://epfl.ch/example/temporaryGraph"
+    elif graph == "final":
+        graphURL = "https://epfl.ch/example/finalGraph"
+    else:
+        raise "ERROR GRAPH NOT FOUND"
+    
+    suggestions = indicate_fair(uri, graphURL)
+
+    return suggestions
 
 
 

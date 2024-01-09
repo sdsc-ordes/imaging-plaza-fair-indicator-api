@@ -33,3 +33,17 @@ Enter in `0.0.0.0:8501`
 //Note: query could be further improved after to include labels rather than path URI's,
 // but lets first make it work before we start pulling results from multiple graphs
 ```
+
+## DEV
+
+These are useful command for development and testing.
+
+```
+poetry install
+poetry shell
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 15400
+```
+
+```
+http://0.0.0.0:15400/indicate/?uri=https://github.com/ImagingDataCommons/dicom-microscopy-viewer&graph=temporary
+```

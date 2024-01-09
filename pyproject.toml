@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "imaging-plaza-fair-indicator-api"
+version = "0.0.1"
+description = "An API microservice to provide useful indications to improve the fair level of your software"
+authors = ["Your Name <you@example.com>"]
+license = "Apache-2.0 license"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+uvicorn = "^0.25.0"
+fastapi = "^0.108.0"
+rdflib = "^7.0.0"
+streamlit = "^1.29.0"
+pyshacl = "^0.25.0"
+python-dotenv = "^1.0.0"
+SPARQLWrapper = "^2.0.0"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
