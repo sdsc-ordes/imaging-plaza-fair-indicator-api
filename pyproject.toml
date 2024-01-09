@@ -3,7 +3,7 @@ name = "imaging-plaza-fair-indicator-api"
 version = "0.0.1"
 description = "An API microservice to provide useful indications to improve the fair level of your software"
 authors = ["Your Name <you@example.com>"]
-license = "Apache-2.0 license"
+license = "AGPL 3.0"
 readme = "README.md"
 
 [tool.poetry.dependencies]

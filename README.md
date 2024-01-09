@@ -45,5 +45,12 @@ python3 -m uvicorn app.main:app --host 0.0.0.0 --port 15400
 ```
 
 ```
-http://0.0.0.0:15400/indicate/?uri=https://github.com/ImagingDataCommons/dicom-microscopy-viewer&graph=temporary
+http://0.0.0.0:15400/indicate/?uri=https://github.com/SDSC-ORD/gimie&graph=https://epfl.ch/example/temporaryGraph
+```
+
+```
+from fairindicator import *
+graph="https://epfl.ch/example/temporaryGraph"
+uri="https://github.com/SDSC-ORD/gimie"
+suggestions = indicate_fair(uri, graph)
 ```

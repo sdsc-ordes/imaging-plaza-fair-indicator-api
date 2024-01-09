@@ -11,16 +11,11 @@ def index():
     return {"title": "Hello, welcome to the Imaging Plaza Fair Level Indicator"}
 
 @app.get("/indicate/")
-async def validate(uri:str, graph: str):
+async def indicate(uri:str, graph: str):
 
-    if graph == "temporary":
-        graphURL = "https://epfl.ch/example/temporaryGraph"
-    elif graph == "final":
-        graphURL = "https://epfl.ch/example/finalGraph"
-    else:
-        raise "ERROR GRAPH NOT FOUND"
+    shapesfile = "app/shapes.ttl"
     
-    suggestions = indicate_fair(uri, graphURL)
+    suggestions = indicate_fair(uri, graph, shapesfile)
 
     return suggestions
 

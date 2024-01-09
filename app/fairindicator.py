@@ -36,7 +36,7 @@ def get_data_from_graphdb(db_host: str,
         filter(?subject = <{softwareURI}> )
         OPTIONAL {{ ?object ?p ?o . }}
                 }}}}}}
-    """.format(softwareURI=softwareURI, graph=graph)
+    """.format(softwareURI=softwareURI, graph=graph) 
 
     sparql = SPARQLWrapper(db_host)
     sparql.setQuery(get_relevant_software_query)
@@ -125,7 +125,7 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
     return result2.serialize(format="json")
 
 
-def indicate_fair(softwareURI:str, graph:str) -> str:
+def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> str:
 
     load_dotenv()
 
@@ -140,10 +140,10 @@ def indicate_fair(softwareURI:str, graph:str) -> str:
 
 
     results = get_data_from_graphdb(db_host, db_user, db_password, softwareURI, graph)
-    #data_g = load_data_into_rdflib(results)
+    data_g = load_data_into_rdflib(results)
 
-    #shapes_g = load_shapes_into_rdflib("shapes.ttl")
-    #results_g = run_shacl_validation(data_g, shapes_g)
-    #suggestions = get_suggestions(results_g)
+    shapes_g = load_shapes_into_rdflib(shapesfile)
+    results_g = run_shacl_validation(data_g, shapes_g)
+    suggestions = get_suggestions(results_g)
 
-    #return suggestions
+    return suggestions
