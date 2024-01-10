@@ -13,7 +13,8 @@ def index():
 @app.get("/indicate/")
 async def indicate(uri:str, graph: str):
 
-    shapesfile = "app/shapes.ttl"
+    # Take shapesfile from environment variable
+    shapesfile = "/app/imaging_plaza_fair_indicator_api/shapes.ttl"
     
     suggestions = indicate_fair(uri, graph, shapesfile)
 

@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from SPARQLWrapper import SPARQLWrapper, JSON, QueryResult, TURTLE, CSV
 import pyshacl
+import json 
 
 def get_data_from_graphdb(db_host: str, 
                           db_user: str, 
@@ -124,7 +125,7 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
     return result2.serialize(format="json")
 
 
-def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> str:
+def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> dict:
 
     load_dotenv()
 
@@ -145,4 +146,6 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> 
     results_g = run_shacl_validation(data_g, shapes_g)
     suggestions = get_suggestions(results_g)
 
-    return suggestions
+    suggestions_dict = json.loads(suggestions)
+
+    return suggestions_dict
