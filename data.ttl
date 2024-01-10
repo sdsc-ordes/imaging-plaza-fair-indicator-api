@@ -1,0 +1,70 @@
+@prefix ex: <https://epfl.ch/example/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+@prefix ns2: <https://codemeta.github.io/terms/> .
+@prefix ns3: <https://w3id.org/okn/o/sd#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://github.com/ImagingDataCommons/dicom-microscopy-viewer> a <http://schema.org/CreativeWork>,
+        <http://schema.org/SoftwareSourceCode> ;
+    rdfs:label "Dicom-microscopy-viewer" ;
+    <http://schema.org/applicationCategory> "Library" ;
+    <http://schema.org/citation> "https://doi.org/10.1109/MSEC.2019.2929282" ;
+    <http://schema.org/codeRepository> "https://github.com/ImagingDataCommons/dicom-microscopy-viewer" ;
+    <http://schema.org/dateCreated> "2018-07-26T00:00:00.000Z" ;
+    <http://schema.org/datePublished> "2023-07-26T00:00:00.000Z" ;
+    <http://schema.org/description> "Web-based DICOM slide microscopy viewer library" ;
+    <http://schema.org/featureList> "dicom" ;
+    <http://schema.org/identifier> "https://github.com/ImagingDataCommons/dicom-microscopy-viewer" ;
+    <http://schema.org/image> [ a <http://schema.org/ImageObject> ;
+            <http://schema.org/keywords> "before image" ;
+            <http://schema.org/url> "https://drive.switch.ch/index.php/s/wMxFXNgjiA9mGpw" ],
+        [ a <http://schema.org/ImageObject> ;
+            <http://schema.org/keywords> "after image" ;
+            <http://schema.org/url> "https://drive.switch.ch/index.php/s/i0u0EqO3uExqYBf" ],
+        [ a <http://schema.org/ImageObject> ;
+            <http://schema.org/keywords> "before image" ;
+            <http://schema.org/url> "https://drive.switch.ch/index.php/apps/files_sharing/ajax/publicpreview.php?x=2794&y=816&a=true&file=national-cancer-institute-L7en7Lb-Ovc-unsplash.jpg" ],
+        [ a <http://schema.org/ImageObject> ;
+            <http://schema.org/keywords> "after image" ;
+            <http://schema.org/url> "https://drive.switch.ch/index.php/apps/files_sharing/ajax/publicpreview.php?x=2794&y=816&a=true&file=national-cancer-institute-L7en7Lb-Ovc-unsplash-after.jpg" ],
+        [ a <http://schema.org/ImageObject> ;
+            <http://schema.org/keywords> "logo" ;
+            <http://schema.org/url> "https://lh3.googleusercontent.com/pw/AIL4fc-NfZ1nfpzCGODc2i5mZPaOISinRdg0nWqu-KPyZT6nwOGVZ-NFkN6qh8_7Y6vfHtBpE2Bc-9Ogm0Zxy2btCpscq4sfgrMEn5DO0CR5FN13-e2TJQFbYWeGHEB5mYI32GPpV0XMptozAH1mynnYuvHWnd7jgAtOHD9_SEBx0e89WaUoyW1xz-uIIol095kX-8d-8RuszvTx3gkK3iktBkqjr21wiWIB6RC62om6XaRyGT9tabSOrec1qMTSVKztIUfNVFJptjBFR09noRmmq8XuS7J23GzeseNnyZF5N3CpwIxp4OBy1w7WJYF9FYY77Ez0pNGImmGTM1cehUTErvAqXCuzHYT7bI6bVLd5-54Dc3oeqw7PwEDsaLcjcCmkKqiMtTupD2WEGRXPWAUGzUiRaILy9IOVtTqvitLYnOZc7WpnHCsloRHYBd6RoS0K6ZrnlSDvLghJxkewH5jt8w5Fx_8IdW5RNQ2m6QoW0ksJJ0-71PXYYAN6Y98gcxEnzW6Esyi95wSLZvSbVWvTkK9SyBkJIaVSgV0vmnhBIG82AgcRH7OfM1gYmGPmgi0KHcLOlW1WHtd8alYdomQuyvMtx5-PQvqTFh0VsMy0TxEJgz_CuFICFAr4s7FFcx_HLI64JIpi_cDwUEgAeQQizbOkIL27WfD81TPUUpdve6XFqg7ncPM6qts0GRAxfxNphxUiUYbZPCwPVtSQmAt0lETWaeLYSgZ94cbrYj7NY2AzXLz-2X80NxO1CICznWXJXTdL8G1xg2fQftsG2yzPD_DbqSpBldG6PPDm2Dw0FTgsODWDuNKEePGH0-vsexBSKNTv2C-TEPGo4nciC6zsDIwti7ZryQ20QLQQhV8pHCYfvR0G6_Hv-Md8XGKqFqWIc9P98lgSPh_g3v4yDgSkvXQ2kFMk9l6fBTr8-prIhrI0mSR9agcjTszUkQN21Uo=w1516-h1516-s-no?authuser=0" ],
+        [ a <http://schema.org/ImageObject> ;
+            <http://schema.org/keywords> "logo" ;
+            <http://schema.org/url> "https://datacommons.cancer.gov/sites/default/files/2020-12/IDC.revised.png" ],
+        [ a <http://schema.org/ImageObject> ;
+            <http://schema.org/keywords> "before image" ;
+            <http://schema.org/url> "https://datacommons.cancer.gov/sites/default/files/inline-images/keyData.png" ],
+        [ a <http://schema.org/ImageObject> ;
+            <http://schema.org/keywords> "after image" ;
+            <http://schema.org/url> "https://datacommons.cancer.gov/sites/default/files/inline-images/submitData.png" ] ;
+    <http://schema.org/license> "https://spdx.org/licenses/MIT" ;
+    <http://schema.org/maintainer> [ a <http://schema.org/Person>,
+                <http://schema.org/Thing>,
+                foaf:Person ;
+            rdfs:label "Test user" ;
+            <http://schema.org/email> "test@test.com" ;
+            <http://schema.org/name> "Test user" ] ;
+    <http://schema.org/name> "Dicom-microscopy-viewer" ;
+    <http://schema.org/producer> [ a <http://schema.org/Organization>,
+                <http://schema.org/Thing> ;
+            <http://schema.org/legalName> " Imaging Data Commons" ] ;
+    <http://schema.org/programmingLanguage> "JavaScript" ;
+    <http://schema.org/supportingData> [ a <http://schema.org/DataFeed>,
+                <http://schema.org/Dataset> ;
+            rdfs:label "DICOM Microscopy" ;
+            <http://schema.org/contentURL> "https://github.com/ImagingDataCommons/dicom-microscopy-viewer/blob/master/README.md" ;
+            <http://schema.org/description> "anilla JS library for web-based visualization of DICOM VL Whole Slide Microscopy Image datasets and derived information.  The viewer allows visualization of slide microscopy images stored in a DICOMweb compatible archive. It leverages the dicomweb-client JavaScript library to retrieve data from the archive." ;
+            <http://schema.org/name> "DICOM Microscopy" ] ;
+    <http://schema.org/url> "https://portal.imaging.datacommons.cancer.gov" ;
+    ns2:readme "https://github.com/ImagingDataCommons/dicom-microscopy-viewer/blob/master/README.md" ;
+    ex:fairLevel "Fair level 0",
+        "Fair level 2" ;
+    ex:graph ex:finalGraph,
+        "https://epfl.ch/example/finalGraph" ;
+    ex:imagingModality "Any" ;
+    ns3:hasDocumentation "http://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_A.32.8.html" ;
+    ns3:readme "https://github.com/ImagingDataCommons/dicom-microscopy-viewer/blob/master/README.md" .
+

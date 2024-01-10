@@ -1,0 +1,85 @@
+@prefix schema: <http://schema.org/>.
+@prefix sd: <https://w3id.org/okn/o/sd#>.
+@prefix bio: <https://bioschemas.org/>.
+@prefix spe: <https://openschemas.github.io/spec-container/specifications/>.
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix shsh: <http://www.w3.org/ns/shacl-shacl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://epfl.ch/example/> .
+@prefix md4i: <http://w3id.org/nfdi4ing/metadata4ing#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://epfl.ch/example/ImagingOntologyShapes>
+	a owl:Ontology ;
+	sh:entailment sh:Rules ;
+	sh:declare [
+		sh:prefix "ex" ;
+		sh:namespace <https://epfl.ch/example/> ;
+	] .
+
+ex:fairlevel0Shape a sh:NodeShape    
+.
+ex:fairlevel1Shape a sh:NodeShape ;
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property
+                  [sh:path schema:license ;
+                  sh:minCount 1;
+                  sh:message "Fair level 1"] ,
+                  [sh:path schema:citation ;
+                  sh:minCount 1;
+                  sh:message "Fair level 1"] ,
+                  [sh:path schema:name ;
+                  sh:minCount 1;
+                  sh:message "Fair level 1"];    
+.
+
+ex:fairlevel2Shape a sh:NodeShape ;
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property 
+                  [sh:path sd:readme ;
+                  sh:minCount 1;
+                  sh:message "Fair level 2"] ;
+      sh:and (ex:fairlevel1Shape)
+.
+
+ex:fairlevel3Shape a sh:NodeShape ;
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property
+                  [sh:path sd:hasInput ;
+                  sh:minCount 1 ;
+                  sh:message "Fair level 3"],
+                  [sh:path sd:hasOutput ;
+                  sh:minCount 1 ;
+                  sh:message "Fair level 3"] ;
+      sh:and (ex:fairlevel2Shape) 
+.
+
+ex:fairlevel4Shape a sh:NodeShape ;
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property 
+                  [sh:path schema:memoryRequirements ;
+                  sh:minCount 1;
+                  sh:message "Fair level 4"] ,
+                  [sh:path sd:hasDocumentation ;
+                  sh:minCount 1;
+                  sh:message "Fair level 4"] ,
+                  [sh:path sd:hasParameter ;
+                  sh:minCount 1;
+                  sh:message "Fair level 4"] ;
+      sh:and (ex:fairlevel3Shape)
+.
+
+ex:fairlevel5Shape a sh:NodeShape ;
+      sh:targetClass schema:SoftwareSourceCode ;
+			sh:property 
+                  [sh:path sd:hasExecutableInstructions ;
+                  sh:minCount 1;
+                  sh:message "Fair level 5"] ,
+                  [sh:path sd:hasExecutableNotebook ;
+                  sh:minCount 1;
+                  sh:message "Fair level 5"];
+      sh:and (ex:fairlevel4Shape) 
+.
