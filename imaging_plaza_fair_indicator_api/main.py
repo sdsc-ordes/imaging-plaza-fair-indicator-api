@@ -14,7 +14,7 @@ def index():
 async def indicate(uri:str, graph: str):
 
     # Take shapesfile from environment variable
-    shapesfile = "app/shapes.ttl"
+    shapesfile = "/app/imaging_plaza_fair_indicator_api/shapes.ttl"
     
     suggestions = indicate_fair(uri, graph, shapesfile)
 

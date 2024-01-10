@@ -21,7 +21,7 @@ if st.button("Indicate FAIR suggestions"):
     # Function logic goes here
     # You can use the selected option and input text in your function
     
-    shapesfile = "../shapes.ttl"
+    shapesfile = "/app/imaging_plaza_fair_indicator_api/shapes.ttl"
     suggestions = indicate_fair(uri, graph, shapesfile)
 
     st.json(suggestions)
