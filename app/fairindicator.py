@@ -57,7 +57,6 @@ def load_data_into_rdflib(results: bytes) -> rdflib.Graph:
     """
     data_g = rdflib.Graph()
     data_g.parse(data=results, format="turtle")
-    print(type(data_g))
     return data_g
 
 def load_shapes_into_rdflib(shapes_path: str) -> rdflib.Graph:
