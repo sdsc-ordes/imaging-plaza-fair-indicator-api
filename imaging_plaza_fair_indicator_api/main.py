@@ -13,6 +13,7 @@ def index():
 @app.get("/indicate/")
 async def indicate(uri:str, graph: str):
 
+    # Take shapesfile from environment variable
     shapesfile = "app/shapes.ttl"
     
     suggestions = indicate_fair(uri, graph, shapesfile)

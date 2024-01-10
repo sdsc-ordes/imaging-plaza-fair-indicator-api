@@ -7,6 +7,10 @@ RUN pip install requirements.txt
 
 
 COPY ./app /app
+
+# Install poetry?
+# Run with poetry?
+
 #COPY ./tests /tests
 
 ENTRYPOINT ["bash", "/app/entrypoint.sh"]
