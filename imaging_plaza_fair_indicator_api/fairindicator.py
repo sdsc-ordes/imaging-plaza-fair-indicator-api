@@ -134,7 +134,7 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
     """
 
     result2 = results_g.query(get_suggestion_query)
-    return result2.serialize(format="json-ld")
+    return result2.serialize(format="json")
 
 
 def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> dict:
