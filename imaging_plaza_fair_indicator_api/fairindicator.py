@@ -2,7 +2,7 @@ import rdflib
 import requests
 import os
 from dotenv import load_dotenv
-from SPARQLWrapper import SPARQLWrapper, JSON, QueryResult, TURTLE, CSV
+from SPARQLWrapper import SPARQLWrapper, JSON, QueryResult, TURTLE, CSV, JSONLD
 import pyshacl
 import json 
 
@@ -134,7 +134,7 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
     """
 
     result2 = results_g.query(get_suggestion_query)
-    return result2.serialize(format="json")
+    return result2.serialize(format="json-ld")
 
 
 def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> dict:
