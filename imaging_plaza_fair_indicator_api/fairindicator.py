@@ -162,7 +162,6 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> 
     if "head" in suggestions_dict:
         del suggestions_dict["head"]
     suggestions_dict = json.dumps(suggestions_dict)
-    print(suggestions_dict)
     return suggestions_dict
 
 
