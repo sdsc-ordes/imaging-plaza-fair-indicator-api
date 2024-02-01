@@ -1,0 +1,127 @@
+@prefix SDS:     <https://github.com/SDSC-ORD/> .
+@prefix bio:     <https://bioschemas.org/> .
+@prefix dash:    <http://datashapes.org/dash#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex:      <http://example.com/> .
+@prefix graphql: <http://datashapes.org/graphql#> .
+@prefix md4i:    <https://example.org/md4i/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema:  <http://schema.org/> .
+@prefix sd:      <https://w3id.org/okn/o/sd#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix shsh:    <http://www.w3.org/ns/shacl-shacl#> .
+@prefix spe:     <https://openschemas.github.io/spec-container/specifications/> .
+@prefix st:      <https://example.org/standard/> .
+@prefix swa:     <http://topbraid.org/swa#> .
+@prefix tosh:    <http://topbraid.org/tosh#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+[ rdf:type     sh:ValidationReport ;
+  sh:conforms  false ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Value must have all of the following shapes: ex:fairlevel3Shape" ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:AndConstraintComponent ;
+                 sh:sourceShape                <https://epfl.ch/example/fairlevel4Shape> ;
+                 sh:value                      SDS:gimie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 1" ;
+                 sh:resultPath                 schema:citation ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 2" ;
+                 sh:resultPath                 sd:readme ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 3" ;
+                 sh:resultPath                 sd:hasOutput ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 5" ;
+                 sh:resultPath                 sd:hasExecutableNotebook ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 4" ;
+                 sh:resultPath                 schema:memoryRequirements ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Value must have all of the following shapes: ex:fairlevel1Shape" ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:AndConstraintComponent ;
+                 sh:sourceShape                <https://epfl.ch/example/fairlevel2Shape> ;
+                 sh:value                      SDS:gimie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Value must have all of the following shapes: ex:fairlevel4Shape" ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:AndConstraintComponent ;
+                 sh:sourceShape                <https://epfl.ch/example/fairlevel5Shape> ;
+                 sh:value                      SDS:gimie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 4" ;
+                 sh:resultPath                 sd:hasDocumentation ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 4" ;
+                 sh:resultPath                 sd:hasParameter ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Value must have all of the following shapes: ex:fairlevel2Shape" ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:AndConstraintComponent ;
+                 sh:sourceShape                <https://epfl.ch/example/fairlevel3Shape> ;
+                 sh:value                      SDS:gimie
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 3" ;
+                 sh:resultPath                 sd:hasInput ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ] ;
+  sh:result    [ rdf:type                      sh:ValidationResult ;
+                 sh:focusNode                  SDS:gimie ;
+                 sh:resultMessage              "Fair level 5" ;
+                 sh:resultPath                 sd:hasExecutableInstructions ;
+                 sh:resultSeverity             sh:Violation ;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                []
+               ]
+] .

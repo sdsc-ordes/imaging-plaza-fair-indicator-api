@@ -110,26 +110,28 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     PREFIX : <https://epfl.ch/example/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-    CONSTRUCT {
-        ?s ?path ?ToAchieve
-    }
+
+    select ?focusNode ?path ?ToAchieve
     WHERE{
+    
+    {
+        SELECT (MIN(?fairLevel) AS ?minFair) 
+        WHERE {
+            ?s a sh:ValidationResult;
+                 sh:focusNode ?focusNode ;
+                 sh:resultPath ?path;
+                 sh:resultMessage ?ToAchieve.
+            BIND(STRAFTER(?ToAchieve, "Fair level ") AS ?fairLevelNum)
+            BIND(xsd:integer(?fairLevelNum) AS ?fairLevel)
+        }
+    }
     ?s a sh:ValidationResult;
-       sh:resultPath ?path;
-       sh:resultMessage ?ToAchieve.
+         sh:focusNode ?focusNode ;
+         sh:resultPath ?path;
+         sh:resultMessage ?ToAchieve.
     BIND(STRAFTER(?ToAchieve, "Fair level ") AS ?fairLevelNum)
     BIND(xsd:integer(?fairLevelNum) AS ?fairLevel)
     FILTER (?fairLevel = ?minFair)
-    {
-        SELECT (MIN(?fairLevel) AS ?minFair)
-        WHERE {
-            ?s a sh:ValidationResult;
-               sh:resultPath ?path;
-               sh:resultMessage ?ToAchieve.
-            BIND(STRAFTER(?ToAchieve, "Fair level ") AS ?fairLevelNum)
-            BIND(xsd:integer(?fairLevelNum) AS ?fairLevel)
-            }
-        } 
     }
     """
 
