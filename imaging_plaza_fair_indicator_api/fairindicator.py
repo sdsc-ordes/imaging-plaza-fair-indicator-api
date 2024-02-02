@@ -2,7 +2,7 @@ import rdflib
 import requests
 import os
 from dotenv import load_dotenv
-from SPARQLWrapper import SPARQLWrapper, JSON, QueryResult, TURTLE, CSV
+from SPARQLWrapper import SPARQLWrapper, JSON, QueryResult, TURTLE, CSV, JSONLD
 import pyshacl
 import json 
 
@@ -109,16 +109,30 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
     get_suggestion_query: str = """
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     PREFIX : <https://epfl.ch/example/>
-    SELECT (GROUP_CONCAT(DISTINCT ?path; SEPARATOR=', ') AS ?youAreMissing) ?ToAchieve
-    WHERE {
-    {    ?s a sh:ValidationResult.
-        ?s sh:resultPath ?path.
-        ?s sh:resultMessage ?ToAchieve.
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+    select ?focusNode ?path ?ToAchieve
+    WHERE{
+    
+    {
+        SELECT (MIN(?fairLevel) AS ?minFair) 
+        WHERE {
+            ?s a sh:ValidationResult;
+                 sh:focusNode ?focusNode ;
+                 sh:resultPath ?path;
+                 sh:resultMessage ?ToAchieve.
+            BIND(STRAFTER(?ToAchieve, "Fair level ") AS ?fairLevelNum)
+            BIND(xsd:integer(?fairLevelNum) AS ?fairLevel)
+        }
     }
+    ?s a sh:ValidationResult;
+         sh:focusNode ?focusNode ;
+         sh:resultPath ?path;
+         sh:resultMessage ?ToAchieve.
+    BIND(STRAFTER(?ToAchieve, "Fair level ") AS ?fairLevelNum)
+    BIND(xsd:integer(?fairLevelNum) AS ?fairLevel)
+    FILTER (?fairLevel = ?minFair)
     }
-    GROUP BY ?ToAchieve
-    ORDER BY ?ToAchieve
-    LIMIT 1
     """
 
     result2 = results_g.query(get_suggestion_query)
@@ -147,5 +161,9 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> 
     suggestions = get_suggestions(results_g)
 
     suggestions_dict = json.loads(suggestions)
-
+    if "head" in suggestions_dict:
+        del suggestions_dict["head"]
+    suggestions_dict = json.dumps(suggestions_dict)
     return suggestions_dict
+
+
