@@ -71,7 +71,9 @@ def load_shapes_into_rdflib(shapes_path: str) -> rdflib.Graph:
         The loaded SHACL shapes as an rdflib.Graph object.
     """
     shapes_g = rdflib.Graph()
+    print(shapes_path)
     shapes_g.parse(file=open(shapes_path), format="turtle")
+    
     return shapes_g
 
 def run_shacl_validation(data_g: rdflib.Graph|str|bytes, shapes_g: rdflib.Graph|str|bytes) -> rdflib.Graph:
@@ -92,10 +94,10 @@ def run_shacl_validation(data_g: rdflib.Graph|str|bytes, shapes_g: rdflib.Graph|
     validation_result = validation_result[1]
     results_g = rdflib.Graph()
     results_g.parse(validation_result, format="turtle")
-    results_g.serialize(format="turtle")
+    results_g.serialize(format="turtle", destination="validation_results.ttl")
     return results_g
 
-def get_suggestions(results_g: rdflib.Graph) -> str:
+def get_suggestions(results_g: rdflib.Graph, ontology_g: rdflib.Graph) -> str:
     """
     Get suggestions on which properties to fill in to move to a next fair level from the SHACL validation results.
 
@@ -105,13 +107,16 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
     Returns:
         The suggestions as a serialized JSON string.
     """
+    combined_g = rdflib.Graph()
+    combined_g.parse('validation_results.ttl')
+    combined_g.parse(ontology_g)
 
     get_suggestion_query: str = """
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     PREFIX : <https://epfl.ch/example/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    select ?focusNode ?path ?ToAchieve
+    select ?focusNode ?pathLabel ?ToAchieve
     WHERE{
     
     {
@@ -121,6 +126,7 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
                  sh:focusNode ?focusNode ;
                  sh:resultPath ?path;
                  sh:resultMessage ?ToAchieve.
+            ?path rdfs:label ?pathLabel .
             BIND(STRAFTER(?ToAchieve, "Fair level ") AS ?fairLevelNum)
             BIND(xsd:integer(?fairLevelNum) AS ?fairLevel)
         }
@@ -129,17 +135,18 @@ def get_suggestions(results_g: rdflib.Graph) -> str:
          sh:focusNode ?focusNode ;
          sh:resultPath ?path;
          sh:resultMessage ?ToAchieve.
+         ?path rdfs:label ?pathLabel .
     BIND(STRAFTER(?ToAchieve, "Fair level ") AS ?fairLevelNum)
     BIND(xsd:integer(?fairLevelNum) AS ?fairLevel)
     FILTER (?fairLevel = ?minFair)
     }
     """
 
-    result2 = results_g.query(get_suggestion_query)
+    result2 = combined_g.query(get_suggestion_query)
     return result2.serialize(format="json")
 
 
-def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> dict:
+def indicate_fair(softwareURI:str, graph:str, shapesfile:str ) -> dict:
 
     load_dotenv()
 
@@ -149,7 +156,7 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> 
     db_password: str = os.environ.get("GRAPHDB_PASSWORD")
 
     #graph: str = 'https://epfl.ch/example/finalGraph'
-    #softwareURI: str = 'https://github.com/SDSC-ORD/gimie'
+    #softwareURI: str = 'https://github.com/stardist/stardist'
 
 
 
@@ -158,12 +165,10 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str = "shapes.ttl") -> 
 
     shapes_g = load_shapes_into_rdflib(shapesfile)
     results_g = run_shacl_validation(data_g, shapes_g)
-    suggestions = get_suggestions(results_g)
+    suggestions = get_suggestions(results_g, shapesfile)
 
     suggestions_dict = json.loads(suggestions)
     if "head" in suggestions_dict:
         del suggestions_dict["head"]
     suggestions_dict = json.dumps(suggestions_dict)
     return suggestions_dict
-
-
