@@ -71,7 +71,6 @@ def load_shapes_into_rdflib(shapes_path: str) -> rdflib.Graph:
         The loaded SHACL shapes as an rdflib.Graph object.
     """
     shapes_g = rdflib.Graph()
-    print(shapes_path)
     shapes_g.parse(file=open(shapes_path), format="turtle")
     
     return shapes_g
