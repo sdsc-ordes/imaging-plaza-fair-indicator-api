@@ -115,7 +115,7 @@ def get_suggestions(results_g: rdflib.Graph, ontology_g: rdflib.Graph) -> str:
     PREFIX : <https://epfl.ch/example/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    select ?focusNode ?path ?ToAchieve
+    select ?focusNode ?pathLabel ?ToAchieve
     WHERE{
     
     {
