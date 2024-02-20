@@ -87,6 +87,86 @@ ex:fairlevel5Shape a sh:NodeShape ;
 .
 
 schema:SoftwareSourceCode
+a sh:NodeShape, rdfs:Class ;
+sh:property schema:SoftwareApplication-applicationCategory ,
+              schema:CreativeWork-citation ,
+              schema:SoftwareSourceCode-codeRepository ,
+              schema:CreativeWork-conditionsOfAccess ,
+              schema:CreativeWork-dateCreated ,
+              schema:CreativeWork-datePublished ,
+              schema:Thing-description ,
+              schema:SoftwareApplication-featureList ,
+              schema:Thing-image ,
+              schema:CreativeWork-isAccessibleForFree ,
+              schema:CreativeWork-isBasedOn ,
+              schema:CreativeWork-license ,
+              schema:CreativeWork-maintainer ,
+              schema:SoftwareApplication-memoryRequirements ,
+              schema:Thing-name ,
+              schema:SoftwareApplication-operatingSystem ,
+              schema:CreativeWork-producer ,
+              schema:SoftwareSourceCode-programmingLanguage ,
+              schema:SoftwareApplication-softwareRequirements ,
+              schema:SoftwareApplication-processorRequirements ,
+              ex:SoftwareApplication-requiresGPU ,
+              schema:SoftwareApplication-supportingData ,
+              schema:CreativeWork-creativeWorkStatus , 
+              schema:Thing-url ,
+              schema:Thing-identifier ,
+              sd:SoftwareApplication-hasAcknowledgements ,
+              sd:SoftwareApplication-hasDocumentation ,
+              sd:SoftwareApplication-hasExecutableInstructions ,
+              sd:SoftwareApplication-hasExecutableNotebook ,
+              sd:SoftwareApplication-hasParameter ,
+              sd:SoftwareApplication-readme ,
+              sd:SoftwareApplication-hasFunding ,
+              sd:SoftwareConfiguration-hasSoftwareImage ,
+              ex:SoftwareApplication-imagingModalityShape ,
+              ex:fairLevelShape ;
+ sh:rule [
+		a sh:TripleRule ;
+		sh:subject sh:this ;
+		sh:predicate ex:fairLevel ;
+		sh:object "Fair level 0" ;
+		sh:condition ex:fairlevel0Shape ];      
+  sh:rule [
+		a sh:TripleRule ;
+		sh:subject sh:this ;
+		sh:predicate ex:fairLevel ;
+		sh:object "Fair level 1" ;
+		sh:condition ex:fairlevel1Shape ];           
+
+  sh:rule [
+		a sh:TripleRule ;
+		sh:subject sh:this ;
+		sh:predicate ex:fairLevel ;
+		sh:object "Fair level 2" ;
+		sh:condition ex:fairlevel2Shape ;
+	] ;
+  sh:rule [
+		a sh:TripleRule ;
+		sh:subject sh:this ;
+		sh:predicate ex:fairLevel ;
+		sh:object "Fair level 3" ;
+		sh:condition ex:fairlevel3Shape ;
+	] ;
+  sh:rule [
+		a sh:TripleRule ;
+		sh:subject sh:this ;
+		sh:predicate ex:fairLevel ;
+		sh:object "Fair level 4" ;
+		sh:condition ex:fairlevel4Shape
+	] ;
+  sh:rule [
+		a sh:TripleRule ;
+		sh:subject sh:this ;
+		sh:predicate ex:fairLevel ;
+		sh:object "Fair level 5" ;
+		sh:condition ex:fairlevel5Shape
+	] ;
+.
+
+schema:SoftwareSourceCode
   a rdfs:Class ;
   rdfs:comment "A software application." ;
   rdfs:label "Software application" ;
