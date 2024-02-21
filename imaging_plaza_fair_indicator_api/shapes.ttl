@@ -108,7 +108,7 @@ sh:property schema:SoftwareApplication-applicationCategory ,
               schema:SoftwareSourceCode-programmingLanguage ,
               schema:SoftwareApplication-softwareRequirements ,
               schema:SoftwareApplication-processorRequirements ,
-              ex:SoftwareApplication-requiresGPU ,
+              ex:SoftwareApplication-requiresGPUShape ,
               schema:SoftwareApplication-supportingData ,
               schema:CreativeWork-creativeWorkStatus , 
               schema:Thing-url ,
@@ -165,6 +165,433 @@ sh:property schema:SoftwareApplication-applicationCategory ,
 		sh:condition ex:fairlevel5Shape
 	] ;
 .
+ex:fairLevelShape a sh:PropertyShape ;
+  sh:path ex:fairLevel ;
+  sh:datatype xsd:string ;
+  sh:minCount 1 ;
+  .
+
+ex:SoftwareApplication-imagingModalityShape 
+  a sh:PropertyShape ;
+  sh:path ex:imagingModality ;
+  sh:in ("MRI" "CAT" "X-Ray" "Any") ;
+  .
+
+schema:SoftwareApplication-applicationCategory
+  a sh:PropertyShape ;
+  sh:path schema:applicationCategory ;
+  sh:in ("Feature extraction" "Segmentation" "Conversion" );
+  .
+schema:SoftwareApplication-processorRequirements
+  a sh:PropertyShape ;
+  sh:path schema:processorRequirements ;
+  sh:datatype xsd:string ;
+  sh:in ("ARM64" "AMD64")
+  .
+
+ex:SoftwareApplication-requiresGPUShape
+  a sh:PropertyShape ;
+  sh:path ex:requiresGPU ;
+  sh:datatype xsd:boolean .
+
+schema:CreativeWork-citation
+  a sh:PropertyShape ;
+  sh:path schema:citation ;
+  sh:minCount 1 ;
+  sh:maxCount 1 ;
+  sh:datatype xsd:string ;
+  sh:pattern "^http.*" ;
+.
+schema:SoftwareSourceCode-codeRepository
+  a sh:PropertyShape ;
+  sh:path schema:codeRepository ;
+  sh:pattern "^http.*" ;
+  sh:minCount 1 ;
+  sh:maxCount 1 ;
+.
+
+schema:CreativeWork-conditionsOfAccess
+  a sh:PropertyShape ;
+  sh:path schema:conditionsOfAccess ;
+  sh:datatype xsd:string ;
+
+.        
+
+schema:CreativeWork-dateCreated
+  a sh:PropertyShape ;
+  sh:path schema:dateCreated ;
+  sh:minCount 1 ;
+  sh:maxCount 1 ;
+  sh:datatype xsd:date ;
+  .
+
+schema:CreativeWork-datePublished
+  a sh:PropertyShape ;
+  sh:path schema:datePublished ;
+  sh:datatype xsd:date ;  
+  sh:minCount 1 ;
+.
+
+schema:Thing-description
+  a sh:PropertyShape ;
+  sh:path schema:description ;
+  sh:datatype xsd:string ;
+  sh:maxLength 2000 ;
+  sh:minCount 1 ;
+.
+
+schema:SoftwareApplication-featureList
+  a sh:PropertyShape ;
+  sh:path schema:featureList ;
+  sh:datatype xsd:string ;
+.
+
+schema:Thing-image
+  a sh:PropertyShape ;
+  sh:path schema:image ;
+  sh:class schema:ImageObject ; 
+  sh:minCount 1 ;
+.
+
+schema:ImagingObject 
+  a sh:NodeShape, rdfs:Class ;
+  sh:property schema:Thing-url ;
+  sh:property schema:CreativeWork-keywords ;
+  .
+
+
+schema:CreativeWork-isAccessibleForFree
+  a sh:PropertyShape ;
+  sh:path schema:isAccessibleForFree ;
+  sh:datatype xsd:boolean ;
+.
+
+schema:CreativeWork-isBasedOn
+  a sh:PropertyShape ;
+  sh:path schema:isBasedOn ;
+  sh:pattern "^http.*" ;
+  .
+
+schema:CreativeWork-keywords
+  a sh:PropertyShape ;
+  sh:path schema:keywords ;
+  sh:datatype xsd:string ;
+  sh:in ("logo" "illustrative image" "before image" "after image") ;
+  sh:minCount 1 ;
+  sh:maxCount 1 ;
+.
+
+schema:CreativeWork-license
+  a sh:PropertyShape ;
+  sh:path schema:license ;
+  sh:pattern ".*spdx\\.org.*" ;
+  sh:minCount 1 ;
+.
+
+schema:CreativeWork-maintainer
+  a sh:PropertyShape ;
+  sh:path schema:maintainer ;
+  sh:minCount 1 ;
+  sh:or (
+      [
+        sh:class schema:Organization ;
+      ]
+      [
+        sh:class schema:Person ;
+      ]
+    ) ;
+.
+
+schema:Person
+a sh:NodeShape ;
+  sh:property schema:Person-email ;
+  sh:property schema:Person-familyName ;
+  sh:property schema:Person-givenName ;
+  sh:property md4i:orcidIdShape ;
+.
+
+schema:Person-email
+  a sh:PropertyShape ;
+  sh:path schema:email ;
+  sh:datatype xsd:string ;
+.
+
+schema:Person-familyName
+  a sh:PropertyShape ;
+  sh:path schema:familyName ;
+  sh:datatype xsd:string ;
+  sh:minCount 1 ;
+  .
+
+schema:Person-givenName
+  a sh:PropertyShape ;
+  sh:path schema:givenName ;
+  sh:datatype xsd:string ;
+  sh:minCount 1 ;
+.
+
+md4i:orcidIdShape
+  a sh:PropertyShape ;
+  sh:path md4i:orcidId ;
+  sh:datatype xsd:string ;
+  .
+
+schema:Organization
+a sh:NodeShape ;
+sh:property schema:Organization-legalName ;
+sh:property md4i:hasRorIdShape ;
+.
+
+schema:SoftwareApplication-memoryRequirements
+  a sh:PropertyShape ;
+  sh:path schema:memoryRequirements ;
+  sh:datatype xsd:string ;
+.
+
+schema:Thing-name
+  a sh:PropertyShape ;
+  sh:path schema:name ;
+  sh:datatype xsd:string ;
+  sh:minCount 1 ;
+  sh:maxLength 60
+.
+
+schema:SoftwareApplication-operatingSystem
+  a sh:PropertyShape ;
+  sh:path schema:operatingSystem ;
+  sh:in ("Linux" "Windows" "MacOS" "Other") ;
+.
+
+schema:CreativeWork-producer
+  a sh:PropertyShape ;
+  sh:path schema:producer ;
+  sh:minCount 1 ;
+  sh:or (
+      [
+        sh:class schema:Organization ;
+      ]
+      [
+        sh:class schema:Person ;
+      ]
+    ) ;
+.
+
+schema:SoftwareSourceCode-programmingLanguage
+  a sh:PropertyShape ;
+  sh:path schema:programmingLanguage ;
+  sh:class schema:ComputerLanguage ;
+.
+
+
+schema:SoftwareApplication-softwareRequirements
+  a sh:PropertyShape ;
+  sh:path schema:softwareRequirements ;
+  sh:datatype xsd:string ;
+.
+
+schema:SoftwareApplication-softwareVersion
+  a sh:PropertyShape ;
+  sh:path schema:softwareVersion ;
+  sh:datatype xsd:string ;
+  sh:pattern "[0-9]+\\.[0-9]+\\.[0-9]+" ;
+  sh:minCount 1 ;
+  .
+
+schema:SoftwareApplication-supportingData
+  a sh:PropertyShape ;
+  sh:path schema:supportingData ;
+  sh:class schema:DataFeed ;
+.
+
+schema:Thing-url
+  a sh:PropertyShape ;
+  sh:path schema:url ;
+  sh:pattern "^http.*" ;
+.
+
+sd:SoftwareApplication-hasAcknowledgements
+    a sh:PropertyShape ;
+    sh:path sd:hasAcknowledgements ;
+    sh:datatype xsd:string ;
+    .
+
+sd:SoftwareApplication-hasDocumentation
+    a sh:PropertyShape ;
+    sh:path sd:hasDocumentation ;
+    sh:pattern "^http.*" ;
+    .
+
+sd:SoftwareApplication-hasExecutableInstructions
+    a sh:PropertyShape ;
+    sh:path sd:hasExecutableInstructions ;
+    sh:datatype xsd:string ;
+    .                           
+
+sd:SoftwareApplication-hasExecutableNotebook
+    a sh:PropertyShape ;
+    sh:path sd:hasExecutableNotebook ;
+    sh:pattern "^http.*" ;
+    .
+
+sd:SoftwareApplication-hasParameter
+    a sh:PropertyShape ;
+    sh:path sd:hasParameter ;
+    sh:class bio:FormalParameter ;
+    .
+
+sd:SoftwareApplication-readme
+    a sh:PropertyShape ;
+    sh:path sd:readme ;
+    sh:pattern "^http.*" ;
+  .
+
+schema:CreativeWork-creativeWorkStatus
+  a sh:PropertyShape ;
+  sh:path schema:creativeWorkStatus ;
+  sh:datatype xsd:string ;
+  .
+
+schema:DataFeed
+a sh:NodeShape ;
+sh:property schema:Thing-description ,
+              schema:DataDownload-contentURL ,
+              schema:Dataset-measurementTechnique ,
+              schema:Thing-name ,
+              schema:Dataset-variableMeasured ;
+              
+.   
+
+schema:DataDownload-contentURL
+  a sh:PropertyShape ;
+  sh:path schema:contentUrl ;
+  sh:pattern "^http.*" ;
+  sh:minCount 1 ;
+.
+
+
+
+sd:SoftwareApplication-hasFunding
+    a sh:PropertyShape ;
+    sh:path sd:hasFunding ;
+    sh:class sd:FundingInformation ;
+    .
+    
+
+schema:Thing-identifier
+  a sh:PropertyShape ;
+  sh:path schema:identifier ;
+  sh:datatype xsd:string ;
+  sh:minCount 1 ;
+.
+
+sd:FundingInformation-fundingSource
+    a sh:PropertyShape ;
+    sh:path sd:fundingSource ;
+    sh:class schema:Organization ;
+    sh:minCount 1 ;
+    .
+sd:FundingInformation-fundingGrant a sh:PropertyShape ;
+	sh:path sd:fundingGrant ;
+	sh:datatype xsd:string ;
+	sh:minCount 1.
+
+sd:FundingInformation
+    a sh:NodeShape ;
+    sh:property schema:Thing-identifier,
+                sd:FundingInformation-fundingGrant,
+                sd:FundingInformation-fundingSource ;
+    .
+
+
+
+bio:FormalParameter
+    a sh:NodeShape ;
+    sh:property schema:Thing-description ,
+                schema:CreativeWork-encodingFormat,
+                schema:Thing-name,
+                sd:DatasetSpecification-hasDimensionality,
+                sd:DatasetSpecification-hasFormat ,
+                schema:PropertyValueSpecification-defaultValue,
+                schema:PropertyValueSpecification-valueRequired
+    .
+
+schema:CreativeWork-encodingFormat
+  a sh:PropertyShape ;
+  sh:path schema:encodingFormat ;
+  sh:pattern ".*iana.org/assignments/media-types/.*" ;
+.
+
+sd:DatasetSpecification-hasDimensionality
+    a sh:PropertyShape ;
+    sh:path sd:hasDimensionality ;
+    sh:datatype xsd:integer ;
+    sh:minExclusive 0 ;
+    .
+
+sd:DatasetSpecification-hasFormat
+    a sh:PropertyShape ;
+    sh:path sd:hasFormat ;
+    sh:datatype xsd:string ;
+    .
+
+schema:PropertyValueSpecification-defaultValue
+  a sh:PropertyShape ;
+  sh:path schema:defaultValue ;
+  sh:datatype xsd:string ;
+
+.
+
+schema:PropertyValueSpecification-valueRequired
+  a sh:PropertyShape ;
+  sh:path schema:valueRequired ;
+  sh:datatype xsd:boolean ;
+.
+
+sd:SoftwareConfiguration-hasSoftwareImage
+    a sh:PropertyShape ;
+    sh:path sd:hasSoftwareImage ;
+    sh:class sd:SoftwareImage;
+    .
+
+sd:SoftwareImage    a sh:NodeShape ;
+    sh:property schema:Thing-name ,
+                schema:Thing-description ,
+                schema:SoftwareApplication-softwareVersion ,
+                sd:SoftwareImage-availableInRegistry ;
+    .
+
+
+
+sd:SoftwareImage-availableInRegistry
+    a sh:PropertyShape ;
+    sh:pattern "^http.*" ;
+    sh:path sd:availableInRegistry ;
+    .
+
+schema:Dataset-measurementTechnique
+  a sh:PropertyShape ;
+  sh:path schema:measurementTechnique ;
+  sh:datatype xsd:string ;
+.
+
+schema:Dataset-variableMeasured
+  a sh:PropertyShape ;
+  sh:path schema:variableMeasured ;
+        sh:datatype xsd:string ;
+.
+
+schema:Organization-legalName
+  a sh:PropertyShape ;
+  sh:path schema:legalName ;
+  sh:datatype xsd:string ;
+  sh:minCount 1 ;
+.
+
+md4i:hasRorIdShape
+  a sh:PropertyShape ;
+  sh:path md4i:hasRorId ;
+  sh:pattern "^http.*" ;
+  .
 
 schema:SoftwareSourceCode
   a rdfs:Class ;
