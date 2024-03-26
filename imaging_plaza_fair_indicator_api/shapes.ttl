@@ -18,6 +18,15 @@
 	sh:declare [
 		sh:prefix "ex" ;
 		sh:namespace <https://epfl.ch/example/> ;
+	] 
+  ;
+  sh:declare [
+		sh:prefix "schema" ;
+		sh:namespace <http://schema.org/> ;
+	] ;
+  sh:declare [
+		sh:prefix "rdfs" ;
+		sh:namespace <http://www.w3.org/2000/01/rdf-schema#> ;
 	] .
 
 ex:fairlevel0Shape a sh:NodeShape    
@@ -86,6 +95,24 @@ ex:fairlevel5Shape a sh:NodeShape ;
       sh:and (ex:fairlevel4Shape) 
 .
 
+ex:FeatureTaggerRule a sh:SPARQLRule ;
+    sh:name "Feature tagger" ;
+    sh:description "This shape is used to extend the initial tagging of a software with it's higher level tags, for ease of retrieval/filtering" ;
+	sh:construct """
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX schema: <http://schema.org/>
+			CONSTRUCT {
+				$this schema:featureList ?parentFeatureLabel .
+                $this schema:featureList ?feature .
+			}
+			WHERE {
+				$this schema:featureList ?feature .
+                ?featureClass rdfs:label ?feature .
+				?featureClass rdfs:subClassOf ?parentFeature.
+                ?parentFeature rdfs:label ?parentFeatureLabel .
+			}
+			""" .
+
 schema:SoftwareSourceCode
 a sh:NodeShape, rdfs:Class ;
 sh:property schema:SoftwareApplication-applicationCategory ,
@@ -108,7 +135,7 @@ sh:property schema:SoftwareApplication-applicationCategory ,
               schema:SoftwareSourceCode-programmingLanguage ,
               schema:SoftwareApplication-softwareRequirements ,
               schema:SoftwareApplication-processorRequirements ,
-              ex:SoftwareApplication-requiresGPU ,
+              ex:SoftwareApplication-requiresGPUShape ,
               schema:SoftwareApplication-supportingData ,
               schema:CreativeWork-creativeWorkStatus , 
               schema:Thing-url ,
@@ -164,6 +191,7 @@ sh:property schema:SoftwareApplication-applicationCategory ,
 		sh:object "Fair level 5" ;
 		sh:condition ex:fairlevel5Shape
 	] ;
+  sh:rule ex:FeatureTaggerRule ;
 .
 
 schema:SoftwareSourceCode

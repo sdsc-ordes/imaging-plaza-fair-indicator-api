@@ -31,11 +31,13 @@ def get_data_from_graphdb(db_host: str,
     ?subject ex:graph <{graph}>  .
     ?subject ?predicate ?object .
     ?object ?p ?o .
+    ?o ?something ?else .
     }} WHERE {{
         GRAPH <{graph}> {{
         {{?subject ?predicate ?object .
         filter(?subject = <{softwareURI}> )
-        OPTIONAL {{ ?object ?p ?o . }}
+        OPTIONAL {{ ?object ?p ?o . 
+        OPTIONAL {{?o ?something ?else}}}}
                 }}}}}}
     """.format(softwareURI=softwareURI, graph=graph) 
 
