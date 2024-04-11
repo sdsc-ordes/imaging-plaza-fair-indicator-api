@@ -137,7 +137,6 @@ sh:property schema:SoftwareApplication-applicationCategory ,
               schema:SoftwareApplication-processorRequirements ,
               ex:SoftwareApplication-requiresGPUShape ,
               schema:SoftwareApplication-supportingData ,
-              schema:CreativeWork-creativeWorkStatus , 
               schema:Thing-url ,
               schema:Thing-identifier ,
               sd:SoftwareApplication-hasAcknowledgements ,
@@ -473,12 +472,6 @@ sd:SoftwareApplication-readme
     sh:pattern "^http.*" ;
   .
 
-schema:CreativeWork-creativeWorkStatus
-  a sh:PropertyShape ;
-  sh:path schema:creativeWorkStatus ;
-  sh:datatype xsd:string ;
-  .
-
 schema:DataFeed
 a sh:NodeShape ;
 sh:property schema:Thing-description ,
@@ -779,10 +772,6 @@ schema:variableMeasured a rdf:Property;
 ex:imagingModality a rdf:Property;
   rdfs:comment "Technique or method used to create images of the interior of a body or an object for which this software was designed.";
   rdfs:label "Imaging modality" .
-
-schema:creativeWorkStatus a rdf:Property;
-  rdfs:comment "The status of a creative work in terms of its stage in a lifecycle. e.g. Incomplete, Draft, Published, Obsolete.";
-  rdfs:label "Creative work status" .
 
 schema:keywords a rdf:Property;
   rdfs:comment "The keywords/tags used to describe this content."@en;
