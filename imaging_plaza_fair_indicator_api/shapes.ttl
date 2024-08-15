@@ -596,8 +596,7 @@ sd:SoftwareImage    a sh:NodeShape ;
                 sd:SoftwareImage-availableInRegistry ;
     .
 
-imag:SoftwareApplication-hasExecutableNotebook a sh:NodeShape ;
-     sh:targetClass imag:ExecutableNotebook ;
+imag:ExecutableNotebook a sh:NodeShape ;
      sh:property schema:Thing-name ,
 		 schema:Thing-description ,
 		 schema:Thing-url .
