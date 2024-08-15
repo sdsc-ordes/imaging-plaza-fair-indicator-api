@@ -61,3 +61,9 @@ suggestions = indicate_fair(uri, graph)
 
 1. Improve the Dockerfile quality
 2. Include the shapesfile as a parameter variables instead of a hardcoded path within the scripts.
+
+
+## Changelog
+
+- v0.0.7 - Update to ontology v0.7
+- v0.0.6 - Initial prod version. Ontology v0.6
