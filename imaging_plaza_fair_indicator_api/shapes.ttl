@@ -597,12 +597,10 @@ sd:SoftwareImage    a sh:NodeShape ;
     .
 
 imag:ExecutableNotebook a sh:NodeShape ;
-     sh:property schema:Thing-name ,
-		 schema:Thing-description ,
-		 schema:Thing-url .
-
-
-
+    sh:property schema:Thing-url , 
+		            schema:Thing-name , 
+		            schema:Thing-description;
+                .
 
 sd:SoftwareImage-availableInRegistry
     a sh:PropertyShape ;
