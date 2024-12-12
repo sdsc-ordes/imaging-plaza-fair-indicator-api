@@ -26,9 +26,9 @@ def get_data_from_graphdb(db_host: str,
     """
 
     get_relevant_software_query: str = """
-    PREFIX ex: <https://epfl.ch/example/>
+    PREFIX imag: <https://imaging-plaza.epfl.ch/ontology#>
     CONSTRUCT {{
-    ?subject ex:graph <{graph}>  .
+    ?subject imag:graph <{graph}>  .
     ?subject ?predicate ?object .
     ?object ?p ?o .
     ?o ?something ?else .
@@ -115,6 +115,7 @@ def get_suggestions(results_g: rdflib.Graph, shapes_g: rdflib.Graph) -> str:
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     PREFIX : <https://epfl.ch/example/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX imag: <https://imaging-plaza.epfl.ch/ontology#>
 
     select ?focusNode ?pathLabel ?ToAchieve
     WHERE{
@@ -170,4 +171,4 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str ) -> dict:
     return suggestions_dict
 
 # Example usage
-# print(indicate_fair('https://github.com/stardist/stardist', 'https://epfl.ch/example/finalGraph', 'shapes.ttl'))
+# print(indicate_fair('https://github.com/stardist/stardist', 'https://imaging-plaza.epfl.ch/finalGraph', 'shapes.ttl'))
