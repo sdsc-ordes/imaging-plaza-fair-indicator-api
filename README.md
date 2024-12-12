@@ -2,7 +2,8 @@
 
 ## How to deploy it? 
 
-1. Fill the .env file containing all the GRAPHDB Credentials. 
+1. Fill the .env file containing all the GRAPHDB Credentials. It's important to add `/repositories/imagingplaza` to your graphDB deployment. 
+
 2. Build the docker image
 
 ``` bash
