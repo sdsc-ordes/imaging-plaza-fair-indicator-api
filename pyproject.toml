@@ -1,9 +1,8 @@
 [tool.poetry]
 name = "imaging-plaza-fair-indicator-api"
-version = "0.0.1"
+version = "0.0.8 "
 description = "An API microservice to provide useful indications to improve the fair level of your software"
-authors = ["Robin Franken <robin.franken@epfl.ch>",
-"Carlos Vivar Rios <carlos.vivarrios@epfl.ch>"]
+authors = ["Robin Franken <robin.franken@epfl.ch>", "Carlos Vivar Rios <carlos.vivarrios@epfl.ch>"]
 license = "AGPL 3.0"
 readme = "README.md"
 
