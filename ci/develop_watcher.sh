@@ -1,7 +1,7 @@
 #!/bin/bash
 # Usage: */5 * * * * /imaging-plaza/ci/develop_watcher.sh >> /imaging-plaza/ci/develop_watcher.log 2>&1
 
-cd /imaging-plaza/fair-indicator-api || exit
+cd /imaging-plaza/imaging-plaza-fair-indicator-api || exit
 
 # Fetch the latest changes from the remote
 git fetch origin develop > /dev/null 2>&1
