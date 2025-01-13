@@ -27,7 +27,9 @@ def get_data_from_graphdb(db_host: str,
 
     get_relevant_software_query: str = """
     PREFIX imag: <https://imaging-plaza.epfl.ch/ontology#>
+    PREFIX imag: <https://imaging-plaza.epfl.ch/ontology#>
     CONSTRUCT {{
+    ?subject imag:graph <{graph}>  .
     ?subject imag:graph <{graph}>  .
     ?subject ?predicate ?object .
     ?object ?p ?o .
@@ -115,6 +117,7 @@ def get_suggestions(results_g: rdflib.Graph, shapes_g: rdflib.Graph) -> str:
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     PREFIX : <https://epfl.ch/example/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX imag: <https://imaging-plaza.epfl.ch/ontology#>
     PREFIX imag: <https://imaging-plaza.epfl.ch/ontology#>
 
     select ?focusNode ?pathLabel ?ToAchieve

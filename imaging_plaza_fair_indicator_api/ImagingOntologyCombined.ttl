@@ -21,6 +21,8 @@ prefix vann: <http://purl.org/vocab/vann/>
 	sh:declare [
 		sh:prefix "imag" ;
 		sh:namespace <https://imaging-plaza.epfl.ch/ontology#> ;
+		sh:prefix "imag" ;
+		sh:namespace <https://imaging-plaza.epfl.ch/ontology#> ;
 	] .
   imag:fairlevel0Shape a sh:NodeShape    
   .
@@ -126,6 +128,7 @@ prefix vann: <http://purl.org/vocab/vann/>
   .
 
 imag:FeatureTaggerRule a sh:SPARQLRule ;
+imag:FeatureTaggerRule a sh:SPARQLRule ;
     sh:name "Feature tagger" ;
     sh:description "This shape is used to extend the initial tagging of a software with it's higher level tags, for ease of retrieval/filtering" ;
 	sh:construct """
@@ -158,6 +161,8 @@ sh:property schema:SoftwareApplication-applicationCategory ,
               schema:CreativeWork-isBasedOn ,
               imag:isPluginModuleOfShape,
               imag:relatedToOrganizationShape, 
+              imag:isPluginModuleOfShape,
+              imag:relatedToOrganizationShape, 
               schema:CreativeWork-license ,
               schema:CreativeWork-maintainer ,
               schema:SoftwareApplication-memoryRequirements ,
@@ -168,6 +173,7 @@ sh:property schema:SoftwareApplication-applicationCategory ,
               schema:SoftwareApplication-softwareRequirements ,
               schema:SoftwareApplication-processorRequirements ,
               imag:SoftwareApplication-requiresGPUShape ,
+              imag:SoftwareApplication-requiresGPUShape ,
               schema:SoftwareApplication-supportingData ,
               schema:Thing-url ,
               schema:Thing-identifier ,
@@ -175,55 +181,73 @@ sh:property schema:SoftwareApplication-applicationCategory ,
               sd:SoftwareApplication-hasDocumentation ,
               sd:SoftwareApplication-hasExecutableInstructions ,
               imag:SoftwareApplication-hasExecutableNotebook ,
+              imag:SoftwareApplication-hasExecutableNotebook ,
               sd:SoftwareApplication-hasParameter ,
               sd:SoftwareApplication-readme ,
               sd:SoftwareApplication-hasFunding ,
               sd:SoftwareConfiguration-hasSoftwareImage ,
               imag:SoftwareApplication-imagingModalityShape ,
               imag:fairLevelShape ;
+              imag:SoftwareApplication-imagingModalityShape ,
+              imag:fairLevelShape ;
  sh:rule [
 		a sh:TripleRule ;
 		sh:subject sh:this ;
 		sh:predicate imag:fairLevel ;
+		sh:predicate imag:fairLevel ;
 		sh:object "Fair level 0" ;
+		sh:condition imag:fairlevel0Shape ];      
 		sh:condition imag:fairlevel0Shape ];      
   sh:rule [
 		a sh:TripleRule ;
 		sh:subject sh:this ;
 		sh:predicate imag:fairLevel ;
+		sh:predicate imag:fairLevel ;
 		sh:object "Fair level 1" ;
+		sh:condition imag:fairlevel1Shape ];           
 		sh:condition imag:fairlevel1Shape ];           
 
   sh:rule [
 		a sh:TripleRule ;
 		sh:subject sh:this ;
 		sh:predicate imag:fairLevel ;
+		sh:predicate imag:fairLevel ;
 		sh:object "Fair level 2" ;
+		sh:condition imag:fairlevel2Shape ;
 		sh:condition imag:fairlevel2Shape ;
 	] ;
   sh:rule [
 		a sh:TripleRule ;
 		sh:subject sh:this ;
 		sh:predicate imag:fairLevel ;
+		sh:predicate imag:fairLevel ;
 		sh:object "Fair level 3" ;
+		sh:condition imag:fairlevel3Shape ;
 		sh:condition imag:fairlevel3Shape ;
 	] ;
   sh:rule [
 		a sh:TripleRule ;
 		sh:subject sh:this ;
 		sh:predicate imag:fairLevel ;
+		sh:predicate imag:fairLevel ;
 		sh:object "Fair level 4" ;
+		sh:condition imag:fairlevel4Shape
 		sh:condition imag:fairlevel4Shape
 	] ;
   sh:rule [
 		a sh:TripleRule ;
 		sh:subject sh:this ;
 		sh:predicate imag:fairLevel ;
+		sh:predicate imag:fairLevel ;
 		sh:object "Fair level 5" ;
+		sh:condition imag:fairlevel5Shape
 		sh:condition imag:fairlevel5Shape
 	] ;
   sh:rule imag:FeatureTaggerRule ;
+  sh:rule imag:FeatureTaggerRule ;
 .
+imag:fairLevelShape a sh:PropertyShape ;
+  sh:path imag:fairLevel ;
 imag:fairLevelShape a sh:PropertyShape ;
   sh:path imag:fairLevel ;
   sh:datatype xsd:string ;
@@ -231,7 +255,10 @@ imag:fairLevelShape a sh:PropertyShape ;
   .
 
 imag:SoftwareApplication-imagingModalityShape 
+imag:SoftwareApplication-imagingModalityShape 
   a sh:PropertyShape ;
+  sh:path imag:imagingModality ;
+  sh:datatype xsd:string ;
   sh:path imag:imagingModality ;
   sh:datatype xsd:string ;
   .
@@ -240,16 +267,20 @@ schema:SoftwareApplication-applicationCategory
   a sh:PropertyShape ;
   sh:path schema:applicationCategory ;
   sh:datatype xsd:string ;
+  sh:datatype xsd:string ;
   .
 schema:SoftwareApplication-processorRequirements
   a sh:PropertyShape ;
   sh:path schema:processorRequirements ;
   sh:datatype xsd:string ;
   sh:in ("ARM64" "AMD64" "None")
+  sh:in ("ARM64" "AMD64" "None")
   .
 
 imag:SoftwareApplication-requiresGPUShape
+imag:SoftwareApplication-requiresGPUShape
   a sh:PropertyShape ;
+  sh:path imag:requiresGPU ;
   sh:path imag:requiresGPU ;
   sh:datatype xsd:boolean .
 
@@ -331,7 +362,16 @@ schema:CreativeWork-isBasedOn
   .
 
 imag:isPluginModuleOfShape
+imag:isPluginModuleOfShape
   a sh:PropertyShape ;
+  sh:path imag:isPluginModuleOf ;
+  sh:datatype xsd:string ;
+  .
+
+imag:relatedToOrganizationShape
+  a sh:PropertyShape ;
+  sh:path imag:relatedToOrganization ;
+  sh:datatype xsd:string ;
   sh:path imag:isPluginModuleOf ;
   sh:datatype xsd:string ;
   .
@@ -379,6 +419,7 @@ a sh:NodeShape ;
   sh:property schema:Person-givenName ;
   sh:property md4i:orcidIdShape ;
   sh:property schema:Person-affiliation 
+  sh:property schema:Person-affiliation 
 .
 
 schema:Person-email
@@ -412,6 +453,13 @@ schema:Person-affiliation
   sh:path schema:affiliation ;
   sh:datatype xsd:string ;
 .
+  .
+
+schema:Person-affiliation
+  a sh:PropertyShape ;
+  sh:path schema:affiliation ;
+  sh:datatype xsd:string ;
+.
 
 schema:Organization
 a sh:NodeShape ;
@@ -422,6 +470,9 @@ sh:property md4i:hasRorIdShape ;
 schema:SoftwareApplication-memoryRequirements
   a sh:PropertyShape ;
   sh:path schema:memoryRequirements ;
+  sh:or (
+    [sh:datatype xsd:string ]
+    [sh:hasValue "None"])
   sh:or (
     [sh:datatype xsd:string ]
     [sh:hasValue "None"])
@@ -458,6 +509,7 @@ schema:CreativeWork-producer
 schema:SoftwareSourceCode-programmingLanguage
   a sh:PropertyShape ;
   sh:path schema:programmingLanguage ;
+  sh:datatype xsd:string ;
   sh:datatype xsd:string ;
 .
 
@@ -507,7 +559,10 @@ sd:SoftwareApplication-hasExecutableInstructions
     .                           
 
 imag:SoftwareApplication-hasExecutableNotebook
+imag:SoftwareApplication-hasExecutableNotebook
     a sh:PropertyShape ;
+    sh:path imag:hasExecutableNotebook ;
+    sh:class imag:ExecutableNotebook ;
     sh:path imag:hasExecutableNotebook ;
     sh:class imag:ExecutableNotebook ;
     .
@@ -527,10 +582,13 @@ sd:SoftwareApplication-readme
 schema:DataFeed
     a sh:NodeShape ;
     sh:property schema:Thing-description ,
+    a sh:NodeShape ;
+    sh:property schema:Thing-description ,
               schema:DataDownload-contentURL ,
               schema:Dataset-measurementTechnique ,
               schema:Thing-name ,
               schema:Dataset-variableMeasured ;
+    .   
     .   
 
 schema:DataDownload-contentURL
@@ -538,6 +596,7 @@ schema:DataDownload-contentURL
   sh:path schema:contentUrl ;
   sh:pattern "^http.*" ;
   sh:minCount 1 ;
+  .
   .
 
 
@@ -685,6 +744,22 @@ md4i:hasRorIdShape
     vann:preferredNamespaceUri "https://imaging-plaza.epfl.ch/ontology#"^^xsd:string ;
     owl:versionInfo "0.7.0"^^xsd:string 
     .
+  .
+
+<https://imaging-plaza.epfl.ch/ontology#>
+    a owl:Ontology ;
+    dct:abstract "The Imaging Plaza ontology provides concepts (classes and properties) to model human and machine readable imaging software metadata. It is the result of re-using external pre-existing vocabularies such as schema.org and the software description ontology, together with custom imaging specific objects and properties." ;
+    dct:contributor "Robin Franken", "Carlos Vivar Rios" ;
+    dct:created "2024-04-01"^^xsd:date ;
+    dct:creator "Robin Franken" ;
+    dct:description "The Imaging Plaza ontology provides concepts (classes and properties) to model human and machine readable imaging software metadata. It is the result of re-using external pre-existing vocabularies such as schema.org and the software description ontology, together with custom imaging specific objects and properties. The ontology contains purely semantic information (labels, definitions etc.) and is meant to be used in conjuction with a graph of enumeration values and a graph containing SHACL shapes to provide more machine readable restrictions on values of properties." ;
+    dct:license <https://spdx.org/licenses/CC-BY-SA-4.0.html> ;
+    dct:modified "2024-08-15"^^xsd:date ;
+    dct:title "Imaging Plaza Ontology" ;
+    vann:preferredNamespacePrefix "imag" ;
+    vann:preferredNamespaceUri "https://imaging-plaza.epfl.ch/ontology#"^^xsd:string ;
+    owl:versionInfo "0.7.0"^^xsd:string 
+    .
 
 schema:SoftwareSourceCode
   a rdfs:Class ;
@@ -703,12 +778,19 @@ schema:citation a rdf:Property;
 schema:contentURL a rdf:Property;
   rdfs:comment "Actual bytes of the media object, for example the image file or video file.";
   rdfs:label "Content URL".
+  rdfs:comment "A DOI https URL citation to publication about this software. Use Zenodo to generate if needed. e.g. https://doi.org/10.1016/j.procs.2017.03.009";
+  rdfs:label "Citation DOI" .
+
+schema:contentURL a rdf:Property;
+  rdfs:comment "Actual bytes of the media object, for example the image file or video file.";
+  rdfs:label "Content URL".
 
 schema:dateCreated a rdf:Property;
   rdfs:comment "The date on which the repository was created.";
   rdfs:label "Date created" .
 
 schema:datePublished a rdf:Property;
+  rdfs:comment "Latest published git release date, else, the publish date of the doi.";
   rdfs:comment "Latest published git release date, else, the publish date of the doi.";
   rdfs:label "Date published" .
 
@@ -718,8 +800,10 @@ schema:maintainer a rdf:Property;
 
 schema:memoryRequirements a rdf:Property;
   rdfs:comment "Minimum RAM requirements in GB to run the software, 0 if not applicable.";
+  rdfs:comment "Minimum RAM requirements in GB to run the software, 0 if not applicable.";
   rdfs:label "Memory requirements" .
 
+imag:fairLevel a rdf:Property;
 imag:fairLevel a rdf:Property;
   rdfs:comment "A score of 1-5 rating the Findability, Accessibility, Interoperability and Reusability of a piece of software based on the presence of certain properties for an instance of software";
   rdfs:label "FAIR Level" .
@@ -728,7 +812,12 @@ schema:affiliation a rdf:Property;
   rdfs:comment "An organization that this person is affiliated with. For example, a university (EPFL/ETHZ), lab, company." ;
   rdfs:label "Affiliation". 
 
+schema:affiliation a rdf:Property;
+  rdfs:comment "An organization that this person is affiliated with. For example, a university (EPFL/ETHZ), lab, company." ;
+  rdfs:label "Affiliation". 
+
 schema:applicationCategory a rdf:Property;
+  rdfs:comment "Type of software application, e.g. 'Plugin, gui, desktop app, library'.";
   rdfs:comment "Type of software application, e.g. 'Plugin, gui, desktop app, library'.";
   rdfs:label "Application category" .
 
@@ -750,6 +839,7 @@ schema:featureList a rdf:Property;
 
 schema:image a rdf:Property;
   rdfs:comment "An image of the item.";
+  rdfs:comment "An image of the item.";
   rdfs:label "Image" .
 
 schema:isAccessibleForFree a rdf:Property;
@@ -760,6 +850,7 @@ schema:isBasedOn a rdf:Property;
   rdfs:comment "A resource from which this work is derived or from which it is a modification or adaption.";
   rdfs:label "Is based on" .
 
+imag:isPluginModuleOf a rdf:Property;
 imag:isPluginModuleOf a rdf:Property;
   rdfs:comment "The resource for which this tool is a plugin or module." ;
   rdfs:label "Is plugin/module of" .
@@ -806,6 +897,7 @@ schema:programmingLanguage a rdf:Property;
 
 schema:softwareRequirements a rdf:Property;
   rdfs:comment "Special third party dependencies (e.g. CUDA, Tensorflow etc. related requirements).";
+  rdfs:comment "Special third party dependencies (e.g. CUDA, Tensorflow etc. related requirements).";
   rdfs:label "Software requirements" .
 
 schema:softwareVersion a rdf:Property;
@@ -849,6 +941,7 @@ schema:variableMeasured a rdf:Property;
   rdfs:label "Variable measured" .
 
 imag:imagingModality a rdf:Property;
+imag:imagingModality a rdf:Property;
   rdfs:comment "Technique or method used to create images of the interior of a body or an object for which this software was designed.";
   rdfs:label "Imaging modality" .
 
@@ -856,6 +949,7 @@ schema:keywords a rdf:Property;
   rdfs:comment "The keywords/tags used to describe this content."@en;
   rdfs:label "Keywords"@en .
 
+imag:requiresGPU a rdf:Property;
 imag:requiresGPU a rdf:Property;
   rdfs:comment "Stipulates whether something requires a graphical processing unit such as a NVIDEA or AMD graphics card";
   rdfs:label "Requires GPU" .
@@ -902,6 +996,7 @@ sd:hasExecutableInstructions a rdf:Property;
   rdfs:comment "URL to Human-readable instructions that indicate how a software component should be executed."@en;
   rdfs:label "Has executable instructions"@en .
 
+imag:hasExecutableNotebook a rdf:Property;
 imag:hasExecutableNotebook a rdf:Property;
   rdfs:comment "Property that links a software component with an executable notebook (e.g., Jupyter notebook)."@en;
   rdfs:label "Has executable notebook"@en .
@@ -971,10 +1066,13 @@ schema:Grant
 .
 
 sd:FundingInformation a rdfs:Class ;
+sd:FundingInformation a rdfs:Class ;
     rdfs:comment "A class to represent the funding information of a software project"@en ;
     rdfs:label "Funding Information"@en ; 
     .
 
+
+sd:DatasetSpecification a rdfs:Class ;
 
 sd:DatasetSpecification a rdfs:Class ;
     rdfs:subClassOf <http://purl.org/linked-data/cube#DataStructureDefinition> ;
@@ -982,6 +1080,7 @@ sd:DatasetSpecification a rdfs:Class ;
     rdfs:label "Dataset Specification"@en ;
     .
 
+bio:FormalParameter a rdfs:Class ;
 bio:FormalParameter a rdfs:Class ;
     rdfs:subClassOf <http://purl.org/linked-data/cube#DataStructureDefinition> ;
     rdfs:comment "A FormalParameter is an identified variable used to stand for the actual value(s) that are consumed/produced by a set of steps"@en ;
@@ -992,7 +1091,13 @@ imag:ExecutableNotebook a rdfs:Class ;
     rdfs:comment "An object representing an executable notebook such as Jupyter Notebook" ;
     rdfs:label "Executable Notebook"@en ;
     .
+imag:ExecutableNotebook a rdfs:Class ;
+    rdfs:comment "An object representing an executable notebook such as Jupyter Notebook" ;
+    rdfs:label "Executable Notebook"@en ;
+    .
 
+sd:SoftwareImage
+    a rdfs:Class ;
 sd:SoftwareImage
     a rdfs:Class ;
     rdfs:subClassOf sd:Software ;
