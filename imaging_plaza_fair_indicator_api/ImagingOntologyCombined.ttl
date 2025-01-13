@@ -54,15 +54,7 @@ prefix vann: <http://purl.org/vocab/vann/>
         
         [sh:path schema:image ;
         sh:minCount 1;
-        sh:message "Fair level 1"] ,
-        
-        [sh:path schema:producer ;
-        sh:minCount 1;
-        sh:message "Fair level 1"] ,
-        
-        [sh:path schema:maintainer ;
-        sh:minCount 1;
-        sh:message "Fair level 1"];
+        sh:message "Fair level 1"] 
   .
 
   imag:fairlevel2Shape a sh:NodeShape ;
@@ -106,7 +98,7 @@ prefix vann: <http://purl.org/vocab/vann/>
         sh:minCount 1;
         sh:message "Fair level 4"] ,
         
-        [sh:path sd:SoftwareConfiguration-hasSoftwareImage ;
+        [sh:path sd:hasSoftwareImage ;
         sh:minCount 1;
         sh:message "Fair level 4"] ;
     sh:and (imag:fairlevel3Shape)
@@ -117,12 +109,7 @@ prefix vann: <http://purl.org/vocab/vann/>
         sh:property
         [sh:path sd:hasExecutableInstructions ;
         sh:minCount 1;
-        sh:message "Fair level 5"] ,
-           
-        [sh:path imag:hasExecutableNotebook ;
-        sh:minCount 1;
-        sh:message "Fair level 5"];
-    sh:and (imag:fairlevel4Shape) 
+        sh:message "Fair level 5"] ;
   .
 
 imag:FeatureTaggerRule a sh:SPARQLRule ;
