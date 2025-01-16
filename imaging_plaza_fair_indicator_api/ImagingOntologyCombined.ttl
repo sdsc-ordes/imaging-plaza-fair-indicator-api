@@ -1,18 +1,18 @@
-@prefix schema: <http://schema.org/>.
-@prefix sd: <https://w3id.org/okn/o/sd#>.
-@prefix bio: <https://bioschemas.org/>.
-@prefix spe: <https://openschemas.github.io/spec-container/specifications/>.
-@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix sh:   <http://www.w3.org/ns/shacl#> .
-@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
-@prefix shsh: <http://www.w3.org/ns/shacl-shacl#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix imag: <https://imaging-plaza.epfl.ch/ontology#> .
-@prefix md4i: <http://w3id.org/nfdi4ing/metadata4ing#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dct: <http://purl.org/dc/terms/>.
-@prefix vann: <http://purl.org/vocab/vann/>.
+prefix schema: <http://schema.org/>
+prefix sd: <https://w3id.org/okn/o/sd#>
+prefix bio: <https://bioschemas.org/>
+prefix spe: <https://openschemas.github.io/spec-container/specifications/>
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix sh:   <http://www.w3.org/ns/shacl#>
+prefix xsd:  <http://www.w3.org/2001/XMLSchema#>
+prefix shsh: <http://www.w3.org/ns/shacl-shacl#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix dcterms: <http://purl.org/dc/terms/>
+prefix imag: <https://imaging-plaza.epfl.ch/ontology#>
+prefix md4i: <http://w3id.org/nfdi4ing/metadata4ing#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix dct: <http://purl.org/dc/terms/>
+prefix vann: <http://purl.org/vocab/vann/>
 
 
 <https://imaging-plaza.epfl.ch/ontology#>
@@ -22,72 +22,95 @@
 		sh:prefix "imag" ;
 		sh:namespace <https://imaging-plaza.epfl.ch/ontology#> ;
 	] .
+  imag:fairlevel0Shape a sh:NodeShape    
+  .
 
-imag:fairlevel0Shape a sh:NodeShape    
-.
-imag:fairlevel1Shape a sh:NodeShape ;
-      sh:targetClass schema:SoftwareSourceCode ;
-			sh:property
-                  [sh:path schema:license ;
-                  sh:minCount 1;
-                  sh:message "Fair level 1"] ,
-                  
-                  [sh:path schema:citation ;
-                  sh:minCount 1;
-                  sh:message "Fair level 1"] ,
-                  
-                  [sh:path schema:name ;
-                  sh:minCount 1;
-                  sh:message "Fair level 1"];    
-.
+  imag:fairlevel1Shape a sh:NodeShape ;
+    sh:targetClass schema:SoftwareSourceCode ;
+        sh:property
+        [sh:path schema:license ;
+        sh:minCount 1;
+        sh:message "Fair level 1"] ,
+        
+        [sh:path schema:citation ;
+        sh:minCount 1;
+        sh:message "Fair level 1"] ,
+        
+        [sh:path schema:description ;
+        sh:minCount 1;
+        sh:message "Fair level 1"] ,
+        
+        [sh:path schema:url ;
+        sh:minCount 1;
+        sh:message "Fair level 1"] ,
+        
+        [sh:path schema:dateCreated ;
+        sh:minCount 1;
+        sh:message "Fair level 1"] ,
+        
+        [sh:path schema:datePublished ;
+        sh:minCount 1;
+        sh:message "Fair level 1"] ,
+        
+        [sh:path schema:image ;
+        sh:minCount 1;
+        sh:message "Fair level 1"] 
+  .
 
-imag:fairlevel2Shape a sh:NodeShape ;
-      sh:targetClass schema:SoftwareSourceCode ;
-			sh:property 
-                  [sh:path sd:readme ;
-                  sh:minCount 1 ;
-                  sh:message "Fair level 2"] ;
-      sh:and (imag:fairlevel1Shape)
-.
+  imag:fairlevel2Shape a sh:NodeShape ;
+    sh:targetClass schema:SoftwareSourceCode ;
+        sh:property 
+        [sh:path sd:readme ;
+        sh:minCount 1 ;
+        sh:message "Fair level 2"] ,
+        
+        [sh:path schema:programmingLanguage ;
+        sh:minCount 1 ;
+        sh:message "Fair level 2"] ,
+        
+        [sh:path schema:featureList ;
+        sh:minCount 1 ;
+        sh:message "Fair level 2"] ;
+    sh:and (imag:fairlevel1Shape)
+  .
 
-imag:fairlevel3Shape a sh:NodeShape ;
-      sh:targetClass schema:SoftwareSourceCode ;
-			sh:property 
-                  [sh:path schema:softwareRequirements ;
-                  sh:minCount 1 ;
-                  sh:message "Fair level 3"] ;
-      sh:and (imag:fairlevel2Shape) 
-.
+  imag:fairlevel3Shape a sh:NodeShape ;
+    sh:targetClass schema:SoftwareSourceCode ;
+        sh:property 
+        [sh:path schema:softwareRequirements ;
+        sh:minCount 1 ;
+        sh:message "Fair level 3"] ,
+        
+        [sh:path schema:supportingData ;
+        sh:minCount 1 ;
+        sh:message "Fair level 3"] ;
+    sh:and (imag:fairlevel2Shape) 
+  .
 
-imag:fairlevel4Shape a sh:NodeShape ;
-      sh:targetClass schema:SoftwareSourceCode ;
-			sh:property 
-                  [sh:path schema:memoryRequirements ;
-                  sh:minCount 1;
-                  sh:message "Fair level 4"] ,
-                  
-                  [sh:path sd:hasDocumentation ;
-                  sh:minCount 1;
-                  sh:message "Fair level 4"] ,
-                  
-                  [sh:path sd:hasParameter ;
-                  sh:minCount 1;
-                  sh:message "Fair level 4"] ;
-      sh:and (imag:fairlevel3Shape)
-.
+  imag:fairlevel4Shape a sh:NodeShape ;
+    sh:targetClass schema:SoftwareSourceCode ;
+        sh:property 
+        [sh:path schema:memoryRequirements ;
+        sh:minCount 1;
+        sh:message "Fair level 4"] ,
+        
+        [sh:path sd:hasDocumentation ;
+        sh:minCount 1;
+        sh:message "Fair level 4"] ,
+        
+        [sh:path sd:hasSoftwareImage ;
+        sh:minCount 1;
+        sh:message "Fair level 4"] ;
+    sh:and (imag:fairlevel3Shape)
+  .
 
-imag:fairlevel5Shape a sh:NodeShape ;
-      sh:targetClass schema:SoftwareSourceCode ;
-			sh:property
-                  [sh:path sd:hasExecutableInstructions ;
-                  sh:minCount 1;
-                  sh:message "Fair level 5"] ,
-                 
-                  [sh:path imag:hasExecutableNotebook ;
-                  sh:minCount 1;
-                  sh:message "Fair level 5"];
-      sh:and (imag:fairlevel4Shape) 
-.
+  imag:fairlevel5Shape a sh:NodeShape ;
+    sh:targetClass schema:SoftwareSourceCode ;
+        sh:property
+        [sh:path sd:hasExecutableInstructions ;
+        sh:minCount 1;
+        sh:message "Fair level 5"] ;
+  .
 
 imag:FeatureTaggerRule a sh:SPARQLRule ;
     sh:name "Feature tagger" ;
@@ -597,10 +620,12 @@ sd:SoftwareImage    a sh:NodeShape ;
     .
 
 imag:ExecutableNotebook a sh:NodeShape ;
-    sh:property schema:Thing-url , 
-		            schema:Thing-name , 
-		            schema:Thing-description;
-                .
+     sh:property schema:Thing-name ,
+		 schema:Thing-description ,
+		 schema:Thing-url .
+
+
+
 
 sd:SoftwareImage-availableInRegistry
     a sh:PropertyShape ;
@@ -728,12 +753,7 @@ imag:isPluginModuleOf a rdf:Property;
 
 imag:relatedToOrganization a rdf:Property ;
   rdfs:comment "The lab/institution/group/project/organization to which a software is related and/or affiliated to" ;
-  rdfs:label "Related to organization" ;
-  .
-
-schema:email a rdf:Property;
-  rdfs:comment "Email address.";
-  rdfs:label "E-mail" .
+  rdfs:label "Related to organization" .
 
 schema:familyName a rdf:Property;
   rdfs:comment "Family name. In the U.S., the last name of a Person.";
@@ -760,7 +780,7 @@ schema:legalName a rdf:Property;
   rdfs:label "Legal name" .
 
 schema:operatingSystem a rdf:Property;
-  rdfs:comment "Operating systems supported (Windows 7, OS X 10.6, Android 1.6).";
+  rdfs:comment "Operating systems supported (Windows 7/10/11, OS X 10.6, Android 1.6).";
   rdfs:label "Operating system" .
 
 schema:producer a rdf:Property;
@@ -788,11 +808,11 @@ schema:identifier a rdf:Property;
   rdfs:label "Identifier" .
 
 schema:defaultValue a rdf:Property;
-  rdfs:comment "The default value of the input.  For properties that expect a literal, the default is a literal value, for properties that expect an object, it's an ID reference to one of the current values.";
+  rdfs:comment "The default value of the input. For properties that expect a literal, the default is a literal value, for properties that expect an object, it's an ID reference to one of the current values.";
   rdfs:label "Default value" .
 
 schema:valueRequired a rdf:Property;
-  rdfs:comment "Whether the property must be filled in to complete the action.  Default is false.";
+  rdfs:comment "Whether the property must be filled in to complete the action. Default is false.";
   rdfs:label "Value required" .
 
 schema:supportingData a rdf:Property;
@@ -836,7 +856,7 @@ sd:hasInput a rdf:Property;
   rdfs:label "Has input"@en .
 
 sd:hasOutput a rdf:Property;
-  rdfs:comment "Property that expresses what are the outputs of a model"@en;
+  rdfs:comment "Property that expresses what the outputs of a model are"@en;
   rdfs:label "Has output"@en .
 
 sd:hasParameter a rdf:Property;
@@ -852,12 +872,12 @@ sd:hasSoftwareImage a rdf:Property;
   rdfs:label "Has software image"@en .
 
 sd:fundingSource a rdf:Property;
-  rdfs:comment "Link to the organization funding a software component"@en;
+  rdfs:comment "Link to an organization funding a software/component"@en;
   rdfs:label "Funding source"@en;
   rdfs:subPropertyOf owl:topObjectProperty .
 
 sd:readme a rdf:Property;
-  rdfs:comment "URl to the readme file of a software component"@en;
+  rdfs:comment "URL to the Readme file of a software component"@en;
   rdfs:label "Readme"@en;
   rdfs:subPropertyOf <https://codemeta.github.io/terms/readme> .
 
@@ -866,7 +886,7 @@ sd:hasDocumentation a rdf:Property;
   rdfs:label "Has documentation"@en .
 
 sd:hasExecutableInstructions a rdf:Property;
-  rdfs:comment "Human-readable instructions that indicate how a software component should be executed."@en;
+  rdfs:comment "URL to Human-readable instructions that indicate how a software component should be executed."@en;
   rdfs:label "Has executable instructions"@en .
 
 imag:hasExecutableNotebook a rdf:Property;
@@ -895,7 +915,7 @@ sd:hasDimensionality a rdf:Property;
   rdfs:label "Has dimensionality"@en .
 
 
-#__________________________________________#
+#_________________________________________#
 
 
 
@@ -966,6 +986,8 @@ sd:SoftwareImage
     rdfs:comment "An image that virtualizes the functionality of a given software. For example, a Docker container."@en ;
     rdfs:label "Software Image"@en ;
     .
+
+
 
 imag:EnumerationType a rdfs:Class ;
     rdfs:subClassOf schema:Enumeration ;
