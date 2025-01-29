@@ -21,7 +21,7 @@ if [ "$LOCAL" != "$REMOTE" ]; then
   
   # Rebuild and run the new container
   docker build  -t fair-indicator-api .
-  docker run -d --name fair-indicator-api --env-file .env -p 7000:15400 fair-indicator-api
+  docker run -d --name fair-indicator-api --env-file .env -p 7510:15400 -p 7511:8501 fair-indicator-api
 else
   echo "$(date '+%Y-%m-%d %H:%M:%S'). No changes found."
 fi
