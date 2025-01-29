@@ -69,6 +69,7 @@ suggestions = indicate_fair(uri, graph)
 
 ## Changelog
 
+- v0.0.9 - Update to ontology v0.8
 - v0.0.8 - Dockerfile simplified
 - v0.0.7 - Update to ontology v0.7
 - v0.0.6 - Initial prod version. Ontology v0.6
