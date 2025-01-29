@@ -2,15 +2,20 @@
 
 ## How to deploy it? 
 
-1. Fill the .env file containing all the GRAPHDB Credentials. 
+1. Fill the .env file containing all the GRAPHDB Credentials. It's important to add `/repositories/imagingplaza` to your graphDB deployment. 
+
 2. Build the docker image
-```
+
+``` bash
 docker build -t imaging-plaza-fair-indicator-api:latest . 
 ```
+
 3. Run the docker container
-```
+
+``` bash
 docker run -it --rm -p 8000:15400 -p 8501:8501 --env-file .env imaging-plaza-fair-indicator-api:latest
 ```
+
 After this command, the API endpoint will be in port 8000 while the GUI in port 8501
 
 ## How to use the API? 
@@ -19,7 +24,7 @@ The endpoint expect the uid in the path: `0.0.0.0:8000/indicate/?uri={URI}&graph
 
 ## How to use the GUI? 
 
-Enter in `0.0.0.0:8501`
+Go to `0.0.0.0:8501`
 
 ## Robin's notes
 
@@ -59,11 +64,12 @@ suggestions = indicate_fair(uri, graph)
 
 ## Things to improve
 
-1. Improve the Dockerfile quality
-2. Include the shapesfile as a parameter variables instead of a hardcoded path within the scripts.
+1. Include the shapesfile as a parameter variables instead of a hardcoded path within the scripts.
 
 
 ## Changelog
 
+- v0.0.9 - Update to ontology v0.8
+- v0.0.8 - Dockerfile simplified
 - v0.0.7 - Update to ontology v0.7
 - v0.0.6 - Initial prod version. Ontology v0.6
