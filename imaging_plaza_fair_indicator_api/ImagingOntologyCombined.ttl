@@ -362,9 +362,7 @@ schema:CreativeWork-maintainer
 
 schema:Person
 a sh:NodeShape ;
-  sh:property schema:Person-email ;
-  sh:property schema:Person-familyName ;
-  sh:property schema:Person-givenName ;
+  sh:property schema:Thing-name ;
   sh:property md4i:orcidIdShape ;
   sh:property schema:Person-affiliation 
 .
