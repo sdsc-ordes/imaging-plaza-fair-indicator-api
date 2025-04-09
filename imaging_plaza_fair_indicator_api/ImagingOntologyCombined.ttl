@@ -686,7 +686,7 @@ imag:SoftwareApplication-RunnableExampleShape
   .
 
 
-imag:hostType a sh:PropertyShape ;
+imag:hostTypeShape a sh:PropertyShape ;
   sh:path imag:hostType ;
   sh:datatype xsd:string ;
   sh:in ("plaza-gradio-application" "renku-project" "google-colab" "wasm" "other") ;
