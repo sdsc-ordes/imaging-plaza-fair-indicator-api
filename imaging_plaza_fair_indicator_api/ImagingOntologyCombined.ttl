@@ -13,6 +13,8 @@ prefix md4i: <http://w3id.org/nfdi4ing/metadata4ing#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix dct: <http://purl.org/dc/terms/>
 prefix vann: <http://purl.org/vocab/vann/>
+prefix sphn: <https://biomedit.ch/rdf/sphn-schema/sphn#>
+prefix dmib: <https://biomedit.ch/rdf/sphn-schema/dmib#>
 
 
 <https://imaging-plaza.epfl.ch/ontology#>
@@ -110,7 +112,7 @@ prefix vann: <http://purl.org/vocab/vann/>
         [sh:path sd:hasExecutableInstructions ;
         sh:minCount 1;
         sh:message "Fair level 5"] ;
-    sh:and (imag:fairlevel4Shape)
+        sh:and (imag:fairlevel4Shape)
   .
 
 imag:FeatureTaggerRule a sh:SPARQLRule ;
@@ -147,11 +149,10 @@ sh:property schema:SoftwareApplication-applicationCategory ,
               imag:isPluginModuleOfShape,
               imag:relatedToOrganizationShape, 
               schema:CreativeWork-license ,
-              schema:CreativeWork-maintainer ,
+              schema:CreativeWork-author ,
               schema:SoftwareApplication-memoryRequirements ,
               schema:Thing-name ,
               schema:SoftwareApplication-operatingSystem ,
-              schema:CreativeWork-producer ,
               schema:SoftwareSourceCode-programmingLanguage ,
               schema:SoftwareApplication-softwareRequirements ,
               schema:SoftwareApplication-processorRequirements ,
@@ -168,7 +169,8 @@ sh:property schema:SoftwareApplication-applicationCategory ,
               sd:SoftwareApplication-hasFunding ,
               sd:SoftwareConfiguration-hasSoftwareImage ,
               imag:SoftwareApplication-imagingModalityShape ,
-              imag:fairLevelShape ;
+              imag:fairLevelShape ,
+              imag:SoftwareApplication-runnableExampleShape ;
  sh:rule [
 		a sh:TripleRule ;
 		sh:subject sh:this ;
@@ -346,9 +348,9 @@ schema:CreativeWork-license
   sh:minCount 1 ;
 .
 
-schema:CreativeWork-maintainer
+schema:CreativeWork-author
   a sh:PropertyShape ;
-  sh:path schema:maintainer ;
+  sh:path schema:author ;
   sh:minCount 1 ;
   sh:or (
       [
@@ -427,20 +429,6 @@ schema:SoftwareApplication-operatingSystem
   sh:in ("Linux" "Windows" "MacOS" "Other") ;
 .
 
-schema:CreativeWork-producer
-  a sh:PropertyShape ;
-  sh:path schema:producer ;
-  sh:minCount 1 ;
-  sh:or (
-      [
-        sh:class schema:Organization ;
-      ]
-      [
-        sh:class schema:Person ;
-      ]
-    ) ;
-.
-
 schema:SoftwareSourceCode-programmingLanguage
   a sh:PropertyShape ;
   sh:path schema:programmingLanguage ;
@@ -516,8 +504,37 @@ schema:DataFeed
               schema:DataDownload-contentURL ,
               schema:Dataset-measurementTechnique ,
               schema:Thing-name ,
-              schema:Dataset-variableMeasured ;
+              schema:Dataset-variableMeasured ,
+              imag:hasDicomMetadataShape ;
     .   
+
+imag:hasDicomMetadataShape a sh:NodeShape ;
+    sh:path imag:hasDicomMetadata ;
+    sh:node imag:DicomMetadata ;
+    .
+
+imag:DicomMetadata a sh:NodeShape, rdfs:Class ;
+    sh:property sphn:bodySiteShape ;
+    sh:property imag:SoftwareApplication-imagingModalityShape  ;
+    sh:property sd:DatasetSpecification-hasDimensionality;
+    sh:property dmib:hasPhysicalQuantityShape ;
+    sh:property imag:resolutionShape ;
+    .
+
+imag:hasPhysicalQuantityShape a sh:PropertyShape ;
+    sh:path dmib:hasPhysicalQuantity ;
+    sh:datatype xsd:string ;
+    .
+
+imag:resolutionShape a sh:PropertyShape ;
+    sh:path imag:resolution ;
+    sh:datatype xsd:string ;
+    .
+
+imag:bodySiteShape a sh:PropertyShape ;
+    sh:path sphn:bodySite ;
+    sh:datatype xsd:string ;
+    .
 
 schema:DataDownload-contentURL
   a sh:PropertyShape ;
@@ -596,7 +613,6 @@ schema:PropertyValueSpecification-defaultValue
   a sh:PropertyShape ;
   sh:path schema:defaultValue ;
   sh:datatype xsd:string ;
-
 .
 
 schema:PropertyValueSpecification-valueRequired
@@ -623,7 +639,13 @@ imag:ExecutableNotebook a sh:NodeShape ;
 		 schema:Thing-description ,
 		 schema:Thing-url .
 
-
+imag:RunnableExampleShape
+  a sh:NodeShape ;
+  sh:property schema:Thing-description ,
+              schema:Thing-url ,
+              schema:Thing-name ,
+              imag:hostTypeShape 
+              .
 
 
 sd:SoftwareImage-availableInRegistry
@@ -657,6 +679,19 @@ md4i:hasRorIdShape
   sh:pattern "^http.*" ;
   .
 
+imag:SoftwareApplication-RunnableExampleShape
+  a sh:PropertyShape ;
+  sh:path imag:runnableExample ;
+  sh:class imag:RunnableExample ;
+  .
+
+
+imag:hostType a sh:PropertyShape ;
+  sh:path imag:hostType ;
+  sh:datatype xsd:string ;
+  sh:in ("plaza-gradio-application" "renku-project" "google-colab" "wasm" "other") ;
+  .
+
 <https://imaging-plaza.epfl.ch/ontology#>
     a owl:Ontology ;
     dct:abstract "The Imaging Plaza ontology provides concepts (classes and properties) to model human and machine readable imaging software metadata. It is the result of re-using external pre-existing vocabularies such as schema.org and the software description ontology, together with custom imaging specific objects and properties." ;
@@ -665,11 +700,11 @@ md4i:hasRorIdShape
     dct:creator "Robin Franken" ;
     dct:description "The Imaging Plaza ontology provides concepts (classes and properties) to model human and machine readable imaging software metadata. It is the result of re-using external pre-existing vocabularies such as schema.org and the software description ontology, together with custom imaging specific objects and properties. The ontology contains purely semantic information (labels, definitions etc.) and is meant to be used in conjuction with a graph of enumeration values and a graph containing SHACL shapes to provide more machine readable restrictions on values of properties." ;
     dct:license <https://spdx.org/licenses/CC-BY-SA-4.0.html> ;
-    dct:modified "2024-08-15"^^xsd:date ;
+    dct:modified "2025-01-28"^^xsd:date ;
     dct:title "Imaging Plaza Ontology" ;
     vann:preferredNamespacePrefix "imag" ;
     vann:preferredNamespaceUri "https://imaging-plaza.epfl.ch/ontology#"^^xsd:string ;
-    owl:versionInfo "0.7.0"^^xsd:string 
+    owl:versionInfo "0.8.0"^^xsd:string 
     .
 
 schema:SoftwareSourceCode
@@ -698,9 +733,9 @@ schema:datePublished a rdf:Property;
   rdfs:comment "Latest published git release date, else, the publish date of the doi.";
   rdfs:label "Date published" .
 
-schema:maintainer a rdf:Property;
-  rdfs:comment "A maintainer of a Dataset, software package or other Project. A maintainer is a Person or Organization that manages contributions to, and/or publication of, some (typically complex) artifact.";
-  rdfs:label "Maintainer" .
+schema:author a rdf:Property;
+  rdfs:comment "The author of the software, this can be organizations or people that are maintainers and/or producers of the software.";
+  rdfs:label "Author" .
 
 schema:memoryRequirements a rdf:Property;
   rdfs:comment "Minimum RAM requirements in GB to run the software, 0 if not applicable.";
@@ -781,10 +816,6 @@ schema:legalName a rdf:Property;
 schema:operatingSystem a rdf:Property;
   rdfs:comment "Operating systems supported (Windows 7/10/11, OS X 10.6, Android 1.6).";
   rdfs:label "Operating system" .
-
-schema:producer a rdf:Property;
-  rdfs:comment "The person or organization who produced the work (e.g. music album, movie, TV/radio series etc.).";
-  rdfs:label "Producer" .
 
 schema:programmingLanguage a rdf:Property;
   rdfs:comment "The computer programming language.";
@@ -913,8 +944,22 @@ sd:hasDimensionality a rdf:Property;
   rdfs:comment "Property to indicate dimensionality of the input or output of a dataset specification"@en;
   rdfs:label "Has dimensionality"@en .
 
+sphn:bodySite a rdf:Property;
+  rdfs:comment "The part of the body that is being imaged."@en;
+  rdfs:label "Body site"@en .
 
-#_________________________________________#
+imag:runnableExample a rdf:Property ;
+  rdfs:comment "A runnable example of the software component"@en ;
+  rdfs:label "Runnable example" .
+
+dmib:hasPhysicalQuantity a rdf:Property;
+  rdfs:comment "Property to indicate the physical quantity of the input or output of a dataset specification"@en;
+  rdfs:label "Has physical quantity"@en .
+
+imag:resolution a rdf:Property ;
+  rdfs:comment "The resolution of the image." ;
+  rdfs:label "Resolution" .
+#_______________________________________#
 
 
 
@@ -954,6 +999,11 @@ schema:Grant
   rdfs:comment "A grant, typically financial or otherwise quantifiable, of resources." ;
   rdfs:label "Grant" ;
   rdfs:subClassOf schema:Intangible ;
+.
+
+imag:RunnableExample a rdfs:Class ;
+  rdfs:comment "A runnable example of the software component"@en ;
+  rdfs:label "Runnable example" ;
 .
 
 sd:FundingInformation a rdfs:Class ;
@@ -1525,3 +1575,29 @@ imag:Cplusplus a imag:ComputerLanguageEnum ;
 imag:MatLab a imag:ComputerLanguageEnum ;
     rdfs:label "MATLAB" ;
 .
+
+imag:HostTypeEnumeration a rdfs:Class ;
+    rdfs:comment "Enumeration class for host type" ;
+    rdfs:label "Host Type Enumeration" ;
+    rdfs:subClassOf imag:EnumerationType ;
+.
+
+imag:PlazaGradioApplication a imag:HostTypeEnumeration ;
+    rdfs:label "Plaza Gradio Application" ;
+    .
+
+imag:RenkuProject a imag:HostTypeEnumeration ;
+    rdfs:label "Renku Project" ;
+    .
+
+imag:GoogleColab a imag:HostTypeEnumeration ;
+    rdfs:label "Google Colab" ;
+    .
+
+imag:Wasm a imag:HostTypeEnumeration ;
+    rdfs:label "WebAssembly" ;
+    .
+
+imag:Other a imag:HostTypeEnumeration ;
+    rdfs:label "Other" ;
+    .
