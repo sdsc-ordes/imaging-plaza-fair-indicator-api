@@ -8,7 +8,7 @@ app = FastAPI()
 
 @app.get("/")
 def index():
-    return {"title": "Hello, welcome to the Imaging Plaza Fair Level Indicator v0.0.9"}
+    return {"title": "Hello, welcome to the Imaging Plaza Fair Level Indicator v0.0.10"}
 
 @app.get("/indicate/")
 async def indicate(uri:str, graph: str):
