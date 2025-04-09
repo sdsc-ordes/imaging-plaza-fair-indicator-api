@@ -505,20 +505,28 @@ schema:DataFeed
               schema:Dataset-measurementTechnique ,
               schema:Thing-name ,
               schema:Dataset-variableMeasured ,
-              imag:hasDicomMetadataShape ;
-    .   
-
-imag:hasDicomMetadataShape a sh:NodeShape ;
-    sh:path imag:hasDicomMetadata ;
-    sh:node imag:DicomMetadata ;
+              imag:datasetFormatShape ,
+              sphn:bodySiteShape ,
+              imag:SoftwareApplication-imagingModalityShape  ,
+              sd:DatasetSpecification-hasDimensionality ,
+              dmib:hasPhysicalQuantityShape ,
+              imag:resolutionShape ;
     .
 
-imag:DicomMetadata a sh:NodeShape, rdfs:Class ;
-    sh:property sphn:bodySiteShape ;
-    sh:property imag:SoftwareApplication-imagingModalityShape  ;
-    sh:property sd:DatasetSpecification-hasDimensionality;
-    sh:property dmib:hasPhysicalQuantityShape ;
-    sh:property imag:resolutionShape ;
+imag:datasetFormatShape a sh:PropertyShape ;
+    sh:path imag:datasetFormat ;
+    sh:datatype xsd:string ;
+    sh:in ("DICOM (Digital Imaging and Communications in Medicine)"
+               "NIfTI (Neuroimaging Informatics Technology Initiative)"
+               "MINC (Medical Imaging NetCDF)"
+               "NRRD (Nearly Raw Raster Data)"
+               "HDF5 (Hierarchical Data Format)"
+               "Parquet"
+               "CSV/TSV (Tabular Data)"
+               "JSON/XML (Structured Data Formats)"
+               "JPEG/PNG/TIFF (Standard Image Formats)"
+               "RAW (Unprocessed Binary Data)"
+               "Other") ;
     .
 
 imag:hasPhysicalQuantityShape a sh:PropertyShape ;
@@ -691,7 +699,7 @@ imag:hostTypeShape a sh:PropertyShape ;
   sh:datatype xsd:string ;
   sh:in ("plaza-gradio-application" "renku-project" "google-colab" "wasm" "other") ;
   .
-
+  
 <https://imaging-plaza.epfl.ch/ontology#>
     a owl:Ontology ;
     dct:abstract "The Imaging Plaza ontology provides concepts (classes and properties) to model human and machine readable imaging software metadata. It is the result of re-using external pre-existing vocabularies such as schema.org and the software description ontology, together with custom imaging specific objects and properties." ;
@@ -943,6 +951,10 @@ sd:availableInRegistry a rdf:Property;
 imag:hostType a rdf:Property ;
   rdfs:comment "The type of host that the software component is running on. For example, plaza-gradio-application, renku-project, google-colab, wasm, other"@en;
   rdfs:label "Host type"@en .
+
+imag:datasetFormat a rdf:Property ;
+  rdfs:comment "The format of the dataset. For example, dicom, nifti, tiff, png, jpg, etc."@en;
+  rdfs:label "Dataset format"@en .
 
 sd:hasDimensionality a rdf:Property;
   rdfs:comment "Property to indicate dimensionality of the input or output of a dataset specification"@en;
@@ -1228,227 +1240,228 @@ imag:FeatureEnum a rdfs:Class ;
     rdfs:subClassOf imag:EnumerationType ;
 .
 
-imag:Annotation a imag:FeatureEnum ;
+imag:Annotation rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Annotation" ;
 .
 
-imag:Labelling a imag:FeatureEnum ;
+imag:Labelling rdfs:subClassOf imag:Annotation ;
     rdfs:label "Labelling" ;
 .
 
-imag:Drawing a imag:FeatureEnum ;
-    rdfs:label "Drawing" ;
-.
-
-imag:OpticalFlow a imag:FeatureEnum ;
+imag:OpticalFlow rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Optical flow" ;
 .
 
-imag:DigitalImageCorrelation a imag:FeatureEnum ;
+imag:DigitalImageCorrelation rdfs:subClassOf imag:OpticalFlow ;
     rdfs:label "Digital image correlation" ;
+    cat:category "Blue" ;
 .
 
-imag:MotionEstimation a imag:FeatureEnum ;
+imag:MotionEstimation rdfs:subClassOf imag:OpticalFlow ;
     rdfs:label "Motion estimation" ;
 .
 
-imag:Registration a imag:FeatureEnum ;
+imag:Registration rdfs:subClassOf imag:OpticalFlow ;
     rdfs:label "Registration" ;
 .
 
-imag:Stitching a imag:FeatureEnum ;
+imag:Stitching rdfs:subClassOf imag:OpticalFlow ;
     rdfs:label "Stitching" ;
 .
 
-imag:DriftCorrection a imag:FeatureEnum ;
+imag:DriftCorrection rdfs:subClassOf imag:OpticalFlow ;
     rdfs:label "Drift correction" ;
 .
 
-imag:Denoising a imag:FeatureEnum ;
+imag:Denoising rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Denoising" ;
 .
 
-imag:Deblurring a imag:FeatureEnum ;
+imag:Deblurring rdfs:subClassOf imag:Denoising ;
     rdfs:label "Deblurring" ;
 .
 
-imag:Smoothing a imag:FeatureEnum ;
+imag:Smoothing rdfs:subClassOf imag:Denoising ;
     rdfs:label "Smoothing" ;
 .
 
-imag:Deconvolution a imag:FeatureEnum ;
+imag:Deconvolution rdfs:subClassOf imag:Denoising ;
     rdfs:label "Deconvolution" ;
 .
 
-imag:Preprocessing a imag:FeatureEnum ;
+imag:Preprocessing rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Preprocessing" ;
 .
 
-imag:Filtering a imag:FeatureEnum ;
+imag:Filtering rdfs:subClassOf imag:Preprocessing ;
     rdfs:label "Filtering" ;
 .
 
-imag:ImageSimplification a imag:FeatureEnum ;
+imag:ImageSimplification rdfs:subClassOf imag:Preprocessing ;
     rdfs:label "Image simplification" ;
 .
 
-imag:ImageEnhancement a imag:FeatureEnum ;
-    rdfs:label "Image enhancement" ;
-.
-
-imag:Segmentation a imag:FeatureEnum ;
+imag:Segmentation rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Segmentation" ;
 .
 
-imag:Classification a imag:FeatureEnum ;
+imag:Classification rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Classification" ;
 .
 
-imag:ObjectDetection a imag:FeatureEnum ;
+imag:ObjectDetection rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Object detection" ;
 .
 
-imag:ObjectRecognition a imag:FeatureEnum ;
+imag:ObjectRecognition rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Object recognition" ;
 .
 
-imag:Clustering a imag:FeatureEnum ;
+imag:Clustering rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Clustering" ;
 .
 
-imag:Grouping a imag:FeatureEnum ;
+imag:Grouping rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Grouping" ;
 .
 
-imag:PatternRecognition a imag:FeatureEnum ;
+imag:PatternRecognition rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Pattern recognition" ;
 .
 
-imag:TemplateMatching a imag:FeatureEnum ;
+imag:TemplateMatching rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Template matching" ;
 .
 
-imag:InstanceSegmentation a imag:FeatureEnum ;
+imag:InstanceSegmentation rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Instance segmentation" ;
 .
 
-imag:PixelClassification a imag:FeatureEnum ;
+imag:PixelClassification rdfs:subClassOf imag:Segmentation ;
     rdfs:label "Pixel classification" ;
 .
 
-imag:FeatureExtraction a imag:FeatureEnum ;
+imag:FeatureExtraction rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Feature extraction" ;
 .
 
-imag:DimensionalityReduction a imag:FeatureEnum ;
+imag:DimensionalityReduction rdfs:subClassOf imag:FeatureExtraction ;
     rdfs:label "Dimensionality reduction" ;
 .
 
-imag:DirectionalImageAnalysis a imag:FeatureEnum ;
+imag:DirectionalImageAnalysis rdfs:subClassOf imag:FeatureExtraction ;
     rdfs:label "Directional image analysis" ;
 .
 
-imag:PoseEstimation a imag:FeatureEnum ;
+imag:PoseEstimation rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Pose estimation" ;
 .
 
-imag:PoseInformation a imag:FeatureEnum ;
+imag:PoseInformation rdfs:subClassOf  imag:PoseEstimation ;
     rdfs:label "Pose information" ;
 .
 
-imag:PoseDetection a imag:FeatureEnum ;
+imag:PoseDetection rdfs:subClassOf  imag:PoseEstimation ;
     rdfs:label "Pose detection" ;
 .
 
-imag:OrientationAnalysis a imag:FeatureEnum ;
+imag:OrientationAnalysis rdfs:subClassOf  imag:PoseEstimation ;
     rdfs:label "Orientation analysis" ;
 .
 
-imag:SceneReconstruction a imag:FeatureEnum ;
+imag:SceneReconstruction rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Scene reconstruction" ;
 .
 
-imag:Reconstruction3d a imag:FeatureEnum ;
+imag:Reconstruction3d rdfs:subClassOf imag:SceneReconstruction ;
     rdfs:label "3d reconstruction" ;
 .
 
-imag:ModelGeneration3d a imag:FeatureEnum ;
+imag:ModelGeneration3d rdfs:subClassOf imag:SceneReconstruction ;
     rdfs:label "3d model generation" ;
 .
 
-imag:MorphologicalReconstruction a imag:FeatureEnum ;
+imag:MorphologicalReconstruction rdfs:subClassOf imag:SceneReconstruction ;
     rdfs:label "Morphological reconstruction" ;
 .
 
-imag:DepthEstimation a imag:FeatureEnum ;
+imag:DepthEstimation rdfs:subClassOf imag:SceneReconstruction ;
     rdfs:label "Depth estimation" ;
 .
 
-imag:CurvatureEstimation a imag:FeatureEnum ;
+imag:CurvatureEstimation rdfs:subClassOf imag:SceneReconstruction ;
     rdfs:label "Curvature estimation" ;
 .
 
-imag:ShadingEstimation a imag:FeatureEnum ;
+imag:ShadingEstimation rdfs:subClassOf imag:SceneReconstruction ;
     rdfs:label "Shading estimation" ;
 .
 
-imag:Modelling a imag:FeatureEnum ;
+imag:Modelling rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Modelling" ;
 .
 
-imag:Simulation a imag:FeatureEnum ;
+imag:Simulation rdfs:subClassOf imag:Modelling ;
     rdfs:label "Simulation" ;
 .
 
-imag:Visualization a imag:FeatureEnum ;
+imag:Drawing rdfs:subClassOf imag:FeatureEnum ;
+    rdfs:label "Drawing" ;
+.
+
+imag:Visualization rdfs:subClassOf imag:Drawing ;
     rdfs:label "Visualization" ;
 .
 
-imag:Rendering a imag:FeatureEnum ;
+imag:Rendering rdfs:subClassOf imag:Drawing ;
     rdfs:label "Rendering" ;
 .
 
-imag:StatisticsMeasurement a imag:FeatureEnum ;
+imag:ImageEnhancement rdfs:subClassOf imag:Drawing ;
+    rdfs:label "Image enhancement" ;
+.
+
+imag:StatisticsMeasurement rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Statistics measurement" ;
 .
 
-imag:QualityMetricMeasurement a imag:FeatureEnum ;
+imag:QualityMetricMeasurement rdfs:subClassOf imag:StatisticsMeasurement ;
     rdfs:label "Quality metric measurement" ;
 .
 
-imag:DistributionMeasurements a imag:FeatureEnum ;
+imag:DistributionMeasurements rdfs:subClassOf imag:StatisticsMeasurement ;
     rdfs:label "Distribution measurements" ;
 .
 
-imag:ImageQualityAssessment a imag:FeatureEnum ;
+imag:ImageQualityAssessment rdfs:subClassOf imag:StatisticsMeasurement ;
     rdfs:label "Image quality assessment" ;
 .
 
-imag:MeshGeneration a imag:FeatureEnum ;
+imag:MeshGeneration rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Mesh generation" ;
 .
 
-imag:Voxelization a imag:FeatureEnum ;
+imag:Voxelization rdfs:subClassOf imag:MeshGeneration ;
     rdfs:label "Voxelization" ;
 .
 
-imag:SurfaceParameterisation a imag:FeatureEnum ;
+imag:SurfaceParameterisation rdfs:subClassOf imag:MeshGeneration ;
     rdfs:label "Surface parameterisation" ;
 .
 
-imag:MorphologicalAnalysis a imag:FeatureEnum ;
+imag:MorphologicalAnalysis rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Morphological analysis" ;
 .
 
-imag:FeatureDetection a imag:FeatureEnum ;
+imag:FeatureDetection rdfs:subClassOf imag:MorphologicalAnalysis  ;
     rdfs:label "Feature detection" ;
 .
 
-imag:Tracking a imag:FeatureEnum ;
+imag:Tracking rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Tracking" ;
 .
 
-imag:VisualQuestionAnswering a imag:FeatureEnum ;
+imag:VisualQuestionAnswering rdfs:subClassOf imag:FeatureEnum ;
     rdfs:label "Visual question answering" ;
 .
 
@@ -1602,6 +1615,56 @@ imag:Wasm a imag:HostTypeEnumeration ;
     rdfs:label "WebAssembly" ;
     .
 
-imag:Other a imag:HostTypeEnumeration ;
+imag:OtherHostType a imag:HostTypeEnumeration ;
     rdfs:label "Other" ;
     .
+
+imag:DatasetFormatEnumeration a rdfs:Class ;
+    rdfs:comment "Enumeration class for dataset formats" ;
+    rdfs:label "Dataset Format Enumeration" ;
+    rdfs:subClassOf imag:EnumerationType ;
+.
+
+imag:DICOM a imag:DatasetFormatEnumeration ;
+    rdfs:label "DICOM (Medical Imaging Format)" ;
+.
+
+imag:NIfTI a imag:DatasetFormatEnumeration ;
+    rdfs:label "NIfTI (Neuroimaging Informatics Technology Initiative)" ;
+.
+
+imag:MINC a imag:DatasetFormatEnumeration ;
+    rdfs:label "MINC (Medical Imaging NetCDF)" ;
+.
+
+imag:NRRD a imag:DatasetFormatEnumeration ;
+    rdfs:label "NRRD (Nearly Raw Raster Data)" ;
+.
+
+imag:HDF5 a imag:DatasetFormatEnumeration ;
+    rdfs:label "HDF5 (Hierarchical Data Format)" ;
+.
+
+imag:Parquet a imag:DatasetFormatEnumeration ;
+    rdfs:label "Parquet" ;
+.
+
+imag:CSV_TSV a imag:DatasetFormatEnumeration ;
+    rdfs:label "CSV/TSV (Tabular Data)" ;
+.
+
+imag:JSON_XML a imag:DatasetFormatEnumeration ;
+    rdfs:label "JSON/XML (Structured Data Formats)" ;
+.
+
+imag:JPEG_PNG_TIFF a imag:DatasetFormatEnumeration ;
+    rdfs:label "JPEG/PNG/TIFF (Standard Image Formats)" ;
+.
+
+imag:RAW a imag:DatasetFormatEnumeration ;
+    rdfs:label "RAW (Unprocessed Binary Data)" ;
+.
+
+imag:OtherDatasetFormat a imag:DatasetFormatEnumeration ;
+    rdfs:label "Other" ;
+.
