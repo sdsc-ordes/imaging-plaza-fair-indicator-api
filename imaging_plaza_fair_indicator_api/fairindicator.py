@@ -45,7 +45,7 @@ def get_data_from_graphdb(db_host: str,
 
     sparql = SPARQLWrapper(db_host)
     sparql.setQuery(get_relevant_software_query)
-    sparql.setReturnFormat('json-ld')
+    sparql.setReturnFormat(JSONLD)
     sparql.setCredentials(user=db_user, passwd=db_password)
     sparql.addCustomHttpHeader("Accept", "application/sparql-results+json")
 
