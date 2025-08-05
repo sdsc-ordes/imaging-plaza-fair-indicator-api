@@ -171,4 +171,4 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str ) -> dict:
     return suggestions_dict
 
 # Example usage
-print(indicate_fair('https://github.com/stardist/stardist', 'https://imaging-plaza.epfl.ch/finalGraph', '/home/rmfranken/imaging-plaza-fair-indicator-api/imaging_plaza_fair_indicator_api/ImagingOntologyCombined.ttl'))
+#print(indicate_fair('https://github.com/stardist/stardist', 'https://imaging-plaza.epfl.ch/finalGraph', '/imaging_plaza_fair_indicator_api/ImagingOntologyCombined.ttl'))
