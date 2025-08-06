@@ -5,8 +5,6 @@ from dotenv import load_dotenv
 from SPARQLWrapper import SPARQLWrapper, JSON, QueryResult, TURTLE, CSV, JSONLD
 import pyshacl
 import json 
-from urllib.error import HTTPError  # Import HTTPError
-
 
 def get_data_from_graphdb(db_host: str, 
                           db_user: str, 
@@ -45,10 +43,9 @@ def get_data_from_graphdb(db_host: str,
 
     sparql = SPARQLWrapper(db_host)
     sparql.setQuery(get_relevant_software_query)
-    sparql.setReturnFormat('json-ld')
+    sparql.setReturnFormat(TURTLE)
     sparql.setCredentials(user=db_user, passwd=db_password)
-    sparql.addCustomHttpHeader("Accept", "application/sparql-results+json")
-
+    results = sparql.query().convert()
     try:
         print("Executing SPARQL query...")
         print(f"Query: {get_relevant_software_query}")
@@ -68,6 +65,7 @@ def get_data_from_graphdb(db_host: str,
     except Exception as e:
         print(f"An error occurred: {e}")
         raise
+
 
 def load_data_into_rdflib(results: bytes) -> rdflib.Graph:
     """
@@ -192,4 +190,4 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str ) -> dict:
     return suggestions_dict
 
 # Example usage
-# print(indicate_fair('https://github.com/flatironinstitute/CaImAn', 'https://imaging-plaza.epfl.ch/finalGraph', 'ImagingOntologyCombined.ttl'))
+#print(indicate_fair('https://github.com/stardist/stardist', 'https://imaging-plaza.epfl.ch/finalGraph', '/imaging_plaza_fair_indicator_api/ImagingOntologyCombined.ttl'))
