@@ -46,7 +46,26 @@ def get_data_from_graphdb(db_host: str,
     sparql.setReturnFormat(TURTLE)
     sparql.setCredentials(user=db_user, passwd=db_password)
     results = sparql.query().convert()
-    return results
+    try:
+        print("Executing SPARQL query...")
+        print(f"Query: {get_relevant_software_query}")
+        results = sparql.query().convert()
+        print("Query executed successfully.")
+        print(f"Results: {results}")
+        return results
+    except HTTPError as e:
+        print(f"HTTP error occurred: {e}")
+        print(f"DB Host: {db_host}")
+        print(f"DB User: {db_user}")
+        print(f"DB Password: {db_password}")
+        print(f"Software URI: {softwareURI}")
+        print(f"Graph: {graph}")
+        print(f"Query: {get_relevant_software_query}")
+        raise
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        raise
+
 
 def load_data_into_rdflib(results: bytes) -> rdflib.Graph:
     """
@@ -171,4 +190,4 @@ def indicate_fair(softwareURI:str, graph:str, shapesfile:str ) -> dict:
     return suggestions_dict
 
 # Example usage
-# print(indicate_fair('https://github.com/stardist/stardist', 'https://imaging-plaza.epfl.ch/finalGraph', 'ImagingOntologyCombined.ttl'))
+#print(indicate_fair('https://github.com/stardist/stardist', 'https://imaging-plaza.epfl.ch/finalGraph', '/imaging_plaza_fair_indicator_api/ImagingOntologyCombined.ttl'))
